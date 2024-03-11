@@ -4,7 +4,7 @@ import '../css/home.css';
 export default function Home() {
 
   return (
-    <div className="text-center pt-[30vh]">
+    <div className="background-space text-center pt-[30vh] min-h-screen text-white">
         <h2>Inventory Management System</h2>
 
         <div className="mt-[10vh] flex flex-row justify-evenly">

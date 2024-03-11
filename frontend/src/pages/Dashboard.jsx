@@ -1,7 +1,5 @@
 import { useRef, useEffect, useState, useContext } from "react";
 import {
-    QueryClient,
-    QueryClientProvider,
     useQuery,
 } from '@tanstack/react-query';
 import { GlobalContext } from "../App";
@@ -22,12 +20,14 @@ export default function Dashboard() {
 
     return (
         <div className="flex items-center justify-center min-h-screen">
-            {
-                !isDashboardStatsLoading && !isDashboardStatsError && <div>Inventory Count: {dashboardStats}</div>
-            }
-            {
-                !isDashboardStatsLoading && !isDashboardStatsError && <div>Container Count: {dashboardStats}</div>
-            }
+            <div>
+                {
+                    !isDashboardStatsLoading && !isDashboardStatsError && <div>Inventory Count: {dashboardStats}</div>
+                }
+                {
+                    !isDashboardStatsLoading && !isDashboardStatsError && <div>Container Count: {dashboardStats}</div>
+                }
+            </div>
         </div>
     );
 };

@@ -17,14 +17,18 @@ const useModal = () => {
       if (!isOpen) return null;
 
       return (
-        <div className="fixed p-4 h-max w-max bg-slate-200 shadow-2xl
-        rounded" 
-            style={{ minWidth: "350px", minHeight: "550px", left:"40%" }}>
-          <div className="modal">
-            <button className="close-button" onClick={closeModal}>
-              Close
-            </button>
-            {children}
+        <div 
+            className="fixed p-4 bg-slate-200 shadow-2xl rounded left-[0] top-[0] w-full h-full bg-transparent"            
+        >
+          <div className="flex flex-col flex-nowrap justify-center align-center mt-[10vh] mx-[10vw] bg-slate-100 px-12">
+            <div className="">
+                <button className="close-button" onClick={closeModal}>
+                Close
+                </button>
+            </div>
+            <div className="py-6">
+                {children}
+            </div>
           </div>
         </div>
       );

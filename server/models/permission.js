@@ -18,6 +18,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Permission',
+    freezeTableName: true,
+    timestamps: false,
   });
   return Permission;
 };

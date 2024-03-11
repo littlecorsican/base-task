@@ -11,9 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // this.hasOne(models.User, { as: 'user', foreignKey: 'assigned_to', sourceKey: 'id' });
-      this.belongsToMany(models.User_Permission, { as: 'user_permission', foreignKey: 'id', sourceKey: 'id' });
-
+      this.hasMany(models.User_Permission, { as: 'user_permission', foreignKey: 'id', sourceKey: 'id' });
     }
   }
   User.init({
@@ -23,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+    freezeTableName: true,
+    timestamps: false,
   });
   return User;
 };

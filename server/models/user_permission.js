@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.user, { as: 'user', foreignKey: 'user_id', sourceKey: 'id' });
-      this.belongsTo(models.permission, { as: 'permission', foreignKey: 'permission_id', sourceKey: 'id' });
+      this.belongsTo(models.User, { as: 'user', foreignKey: 'id', sourceKey: 'user_id' });
+      this.belongsTo(models.Permission, { as: 'permission', foreignKey: 'id', sourceKey: 'permission_id' });
     }
   }
   User_Permission.init({
@@ -21,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User_Permission',
+    freezeTableName: true,
+    timestamps: false,
   });
   return User_Permission;
 };

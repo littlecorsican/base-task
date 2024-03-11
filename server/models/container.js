@@ -13,19 +13,21 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(models.Container, { 
         as: 'container',
-        foreignKey: 'container_id',
-        sourceKey: 'id',
+        foreignKey: 'id',
+        sourceKey: 'container_id',
         allowNull: true
       });
     }
   }
   Container.init({
     name: DataTypes.STRING,
-    description: DataTypes.STRING,
+    description: DataTypes.TEXT,
     container_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Container',
+    freezeTableName: true,
+    timestamps: false,
   });
   return Container;
 };

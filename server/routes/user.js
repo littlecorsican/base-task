@@ -32,14 +32,6 @@ router.put('/:id', async function (req, res) {
     res.send(result);
 })
 
-// router.post('/', async function (req, res) {
-    
-//     console.log(req.body)
-//     const result = await models.User.create({ ...req.body })
-//     console.log(result)
-//     res.send(result);
-// })
-
 router.post('/login', async function (req, res) {
     console.log(process.env.JWTSECRET) 
     console.log(req.body)
@@ -132,8 +124,6 @@ router.post('/verify', async function (req, res) {
         console.log("user", user)
     
         return res.status(200).send({ success: 1, message: "authentication success" });
-        
-
     })
     
 })

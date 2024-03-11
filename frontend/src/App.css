@@ -1,3 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --primaryColor: #1e90ff;
+  --secondaryColor: #1e90ff;
+  --primaryFont: "JobClarendon";
+  --font-fallback: BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+  "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-sans;
+}
+
 .App {
   text-align: center;
 }

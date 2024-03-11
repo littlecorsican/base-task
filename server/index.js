@@ -9,18 +9,14 @@ app.use(cors({
 const router = express.Router()
 
 const userRoute=require('./routes/user')
-const taskRoute=require('./routes/task')
-const projectRoute=require('./routes/project')
-const statusRoute=require('./routes/status')
 const productRoute=require('./routes/product')
 const containerRoute=require('./routes/container')
+const dashboardRoute=require('./routes/dashboard')
 
 app.use('/api/user', userRoute)
-app.use('/api/task', taskRoute)
-app.use('/api/project', projectRoute)
-app.use('/api/status', statusRoute)
 app.use('/api/inventory', productRoute)
 app.use('/api/container', containerRoute)
+app.use('/api/dashboard', dashboardRoute)
 
 // router.use(() => {}); // General middleware
 // router.get('/route1', () => {})
@@ -28,29 +24,9 @@ app.use('/api/container', containerRoute)
 // router.post('/route2', () => {})
 
 
-// const Sequelize = require("sequelize");
-
-// const sequelize = new Sequelize(
-//  'hello_world_db',
-//  'DATABASE_USERNAME',
-//  'DATABASE_PASSWORD',
-//   {
-//     host: 'DATABASE_HOST',
-//     dialect: 'mysql'
-//   }
-// );
-
-// app.prefix('/', function (home) {
-//     // home.route('/').get(data.welcome); //other route
-//     // home.route('/home').get(data.home); // other route
-   
-// });
-
 app.get('/', function (req, res) {
    res.send('Hello World');
 })
-
-
 
 var server = app.listen(8081, function () {
    var host = server.address().address

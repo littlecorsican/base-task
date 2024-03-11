@@ -12,11 +12,15 @@ const userRoute=require('./routes/user')
 const taskRoute=require('./routes/task')
 const projectRoute=require('./routes/project')
 const statusRoute=require('./routes/status')
+const productRoute=require('./routes/product')
+const containerRoute=require('./routes/container')
 
 app.use('/api/user', userRoute)
 app.use('/api/task', taskRoute)
 app.use('/api/project', projectRoute)
 app.use('/api/status', statusRoute)
+app.use('/api/inventory', productRoute)
+app.use('/api/container', containerRoute)
 
 // router.use(() => {}); // General middleware
 // router.get('/route1', () => {})

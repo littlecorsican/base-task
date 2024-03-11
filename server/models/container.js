@@ -11,13 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // this.hasOne(models.Container, { as: 'container', foreignKey: 'container', sourceKey: 'container' });
+      this.hasMany(models.Container, { 
+        as: 'container',
+        foreignKey: 'container_id',
+        sourceKey: 'id',
+        allowNull: true
+      });
     }
   }
   Container.init({
     name: DataTypes.STRING,
     description: DataTypes.STRING,
-    container: DataTypes.INTEGER
+    container_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Container',

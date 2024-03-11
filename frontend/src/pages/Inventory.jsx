@@ -7,6 +7,7 @@ import '../css/inventory.css';
 import useModal from '../hooks/useModal'
 import useProducts from '../hooks/useInventory'
 import { z } from "zod";
+import { request } from '../utils/helpers'
 
 export default function Inventory() {
 
@@ -20,6 +21,7 @@ export default function Inventory() {
     const CreateProduct=(e)=>{
         e.preventDefault()
         console.log(e)
+        global_context.setLoading(true)
         const schema = z.object({
             name: z.string(),
             description: z.string(),
@@ -29,13 +31,21 @@ export default function Inventory() {
             description: descriptionRef.current.value,
         })
         console.log(result)
+
         if (!result.success) {
             const errorMsg = result.error.issues.map(item=>`${item.path[0]} - ${item.message} . \n`).join("")
             global_context.toast(errorMsg)
             return
         }
 
-        
+        request(`/api/inventory`, "POST", {
+            name: nameRef.current.value,
+            description: descriptionRef.current.value
+        }).then((result)=>{
+            console.log("result", result)
+            global_context.setLoading(false)
+        })
+
     }
 
   return (
@@ -47,19 +57,43 @@ export default function Inventory() {
           Create New Inventory
         </button>
       </div>
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="">
+        {
+            isInventoryLoading && <div>Inventory list is loading....</div>
+        }
+        {
+            isInventoryError && <div>{inventoryError}</div>
+        }
         <div>
-            {
-                isInventoryLoading && <div>Inventory list is loading....</div>
-            }
-            <table>
+            <div>
+                Filter
+            </div>
+            <table border="1">
                 <thead>
-
+                    <tr>
+                        <th style={{ minWidth: "20px" }}>ID</th>
+                        <th>Product Name</th>
+                        <th>Product Description</th>
+                    </tr>
                 </thead>
                 <tbody>
-
+                    {
+                        !isInventoryLoading && inventory.map((value)=>{
+                            <tr key={value?.id}>
+                                <th>
+                                    {value?.name}
+                                </th>
+                                <th>
+                                    {value?.description}
+                                </th>
+                            </tr>
+                        })
+                    }
                 </tbody>
             </table>
+            <div>
+
+            </div>
         </div>
       </div>
       <CreateNewModal>

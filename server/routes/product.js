@@ -52,7 +52,9 @@ router.get('/', function (req, res) {
             offset: offset
         }).then((response)=>res.send({  
             success: 1,
-            data: response
+            data: response,
+            limit: limit,
+            offset: offset
         }))
     } catch(err) {
         res.send({  

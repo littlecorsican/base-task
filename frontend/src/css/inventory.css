@@ -26,3 +26,14 @@ textarea {
     padding: 2px 4px;
     width: var(--inputWidth);
 }
+
+td, th {
+    min-width: 200px;
+    border: 1px solid;
+}
+
+table {
+    width: 100%;
+    border: 1px solid;
+    border-collapse: collapse;
+}

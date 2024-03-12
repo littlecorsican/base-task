@@ -5,8 +5,6 @@ module.exports = {
     await queryInterface.bulkInsert('permission', [{
       id: 1,
       name: "view_product"
-      // createdAt: new Date(),
-      // updatedAt: new Date(),
     }, 
     {
       id: 2,
@@ -22,19 +20,11 @@ module.exports = {
     },
     {
       id: 5,
-      name: "view_container"
+      name: "view_permission"
     },
     {
       id: 6,
-      name: "create_container"
-    },
-    {
-      id: 7,
-      name: "update_container"
-    },
-    {
-      id: 8,
-      name: "delete_container"
+      name: "alter_permission"
     },
     ], {});
   },

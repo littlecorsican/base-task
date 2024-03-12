@@ -22,9 +22,12 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      container_id: {
-        type: Sequelize.INTEGER
+      price: {
+        type: Sequelize.DECIMAL
       },
+      timestamp: {
+        type: Sequelize.DATE
+      }
     });
   },
 

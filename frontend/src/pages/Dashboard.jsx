@@ -21,11 +21,26 @@ export default function Dashboard() {
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div>
+                <h1>Stats</h1>
                 {
-                    !isDashboardStatsLoading && !isDashboardStatsError && <div>Inventory Count: {dashboardStats}</div>
+                    !isDashboardStatsLoading && 
+                    !isDashboardStatsError && 
+                    <div>Total Inventory Count: {dashboardStats}</div>
                 }
                 {
-                    !isDashboardStatsLoading && !isDashboardStatsError && <div>Container Count: {dashboardStats}</div>
+                    !isDashboardStatsLoading && 
+                    !isDashboardStatsError && 
+                    <div>New Inventory Count Past 24 hours: {dashboardStats}</div>
+                }
+                {
+                    !isDashboardStatsLoading && 
+                    !isDashboardStatsError && 
+                    <div>Most Expensive Inventory: {dashboardStats}</div>
+                }
+                {
+                    !isDashboardStatsLoading && 
+                    !isDashboardStatsError && 
+                    <div>Cheapest Inventory: {dashboardStats}</div>
                 }
             </div>
         </div>

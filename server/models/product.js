@@ -11,13 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasOne(models.Container, { as: 'container', foreignKey: 'id', sourceKey: 'container_id' });
+      //this.hasOne(models.Container, { as: 'container', foreignKey: 'id', sourceKey: 'container_id' });
     }
   }
   Product.init({
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
-    container_id: DataTypes.INTEGER
+    price: DataTypes.DECIMAL,
+    timestamp: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Product',

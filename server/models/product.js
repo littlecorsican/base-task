@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Product',
     freezeTableName: true,
-    timestamps: false,
+    created_at: false,
   });
   return Product;
 };

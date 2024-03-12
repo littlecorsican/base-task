@@ -25,7 +25,7 @@ module.exports = {
       price: {
         type: Sequelize.DECIMAL
       },
-      timestamp: {
+      created_at: {
         type: Sequelize.DATE
       }
     });

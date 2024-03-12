@@ -74,6 +74,8 @@ export default function Inventory() {
                         <th className="small-td">ID</th>
                         <th>Product Name</th>
                         <th>Product Description</th>
+                        <th>Price</th>
+                        <th>Date</th>
                         <th className="small-td"></th>
                     </tr>
                 </thead>
@@ -89,6 +91,12 @@ export default function Inventory() {
                                 </td>
                                 <td>
                                     {value?.description}
+                                </td>
+                                <td>
+                                    {value?.price}
+                                </td>
+                                <td>
+                                    {value?.created_at}
                                 </td>
                                 <td className="small-td">
                                     <button>Edit</button>

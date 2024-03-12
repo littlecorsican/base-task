@@ -8,6 +8,12 @@ const models = require('../models/index')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
+const genSaltAndHash = require('../helpers.js')
+
+router.get('/testHash', function (req, res) {
+    const r = genSaltAndHash("1234567")
+    res.send(r)
+})
 
 router.get('/:id', function (req, res) {
     const id = req.params

@@ -1,6 +1,6 @@
 'use strict';
-import { hash } from '../helpers'
-require('dotenv').config()
+const genSaltAndHash = require('../helpers.js')
+
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -18,7 +18,7 @@ module.exports = {
       id: 1,
       name: "superadmin",
       email: "root@root.com",
-      password: hash(process.env.JWTSECRET, 10, "1234567")
+      password: genSaltAndHash("1234567")
     }], {});
   },
 

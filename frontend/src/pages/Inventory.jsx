@@ -15,11 +15,18 @@ export default function Inventory() {
     const descriptionRef = useRef()
     const priceRef = useRef()
     const global_context = useContext(GlobalContext)
+    const limit = 10
+    //let offset = 0
+    const [offset, setOffset] = useState(0)
     const [ModalCreate, setModalCreate] = useState(false)  // whether the modal is for create or update
     const [currentSelected, setCurrentSelected] = useState({})
-    const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading, refetch } = useProducts({limit:10, offset:0})
+    const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading, refetch } = useProducts({limit:limit, offset:offset})
 
     const { openModal:openCreateNewModal, Modal:CreateNewModal, closeModal:closeCreateNewModal } = useModal();
+
+    useEffect(()=>{
+        refetch()
+    },[offset])
 
     const createProduct=(e)=>{
         e.preventDefault()
@@ -118,7 +125,7 @@ export default function Inventory() {
             isInventoryLoading && <div>Inventory list is loading....</div>
         }
         {
-            isInventoryError && <div>{inventoryError}</div>
+            isInventoryError && <div>{inventoryError?.message}</div>
         }
         <div>
             <div>
@@ -138,7 +145,7 @@ export default function Inventory() {
                 </thead>
                 <tbody>
                     {
-                        !isInventoryLoading && inventory && inventory.map((value)=>{
+                        !isInventoryLoading && !isInventoryError && inventory && inventory.map((value)=>{
                             return<tr key={value?.id}>
                                 <td className="small-td">
                                     {value?.id}
@@ -177,7 +184,23 @@ export default function Inventory() {
                     }
                 </tbody>
             </table>
-            <div>
+            {/* PAGINATION */}
+            <div className="flex flex-row justify-around my-2">
+                <div>
+                    Page: {offset}
+                </div>
+                <div>
+                    Rows Per Page:{limit}
+                </div>
+                <div>
+                    <button onClick={()=>{
+                        if (offset === 0) return
+                        setOffset((offset)=>offset-limit)
+                    }}> Back </button>
+                    <button onClick={()=>{
+                        setOffset((offset)=>offset+limit)
+                    }}> Next </button>
+                </div>
 
             </div>
         </div>

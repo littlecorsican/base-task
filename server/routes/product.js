@@ -6,7 +6,9 @@ router.use(bodyParser.json());
 // router.use(bodyParser.raw());
 const models = require('../models/index')
 const jwt = require('jsonwebtoken');
-require('dotenv').config()
+const { Sequelize } = require('sequelize');
+require('dotenv').config();
+const Op = Sequelize.Op; 
 
 // router.use((req, res, next) => {
 //     //console.log("req", req)
@@ -42,7 +44,7 @@ router.get('/count', function (req, res) {
     }
 })
 
-router.get('/', function (req, res) {
+router.get('/', function (req, res) { // Get all with pagination
     const {limit, offset} = req.query
     console.log(req)
     console.log(limit, offset)
@@ -64,10 +66,36 @@ router.get('/', function (req, res) {
     }
 })
 
-router.get('/:id', function (req, res) {
-    const id = req.params
+router.get('/search', function (req, res) { // Get all with search
+    const {limit, offset, search} = req.query
+    console.log(limit, offset, search)
+    try {
+        models.Product.findAll({
+            limit: limit,
+            offset: offset,
+            where: {
+                name: {
+                    [Op.like]: '%' + search + '%'
+                }
+            }
+        }).then((response)=>res.send({  
+            success: 1,
+            data: response,
+            limit: limit,
+            offset: offset
+        }))
+    } catch(err) {
+        res.send({  
+            success: 0,
+            message: err.toString()
+        });
+    }
+})
+
+router.get('/:id', function (req, res) { // Get one by id
+    const id = req.params.id
     console.log("id",id)
-    models.Product.findOne({ where: { id } }).then((response)=>console.log(response))
+    // models.Product.findOne({ where: { id } }).then((response)=>console.log(response))
     try {
         models.Product.findOne({ where: { id } })
         .then((response)=>res.send({  
@@ -82,7 +110,7 @@ router.get('/:id', function (req, res) {
     }
 })
 
-router.put('/:id', async function (req, res) {
+router.put('/:id', async function (req, res) { // Update one by id
     const id = req.params
     console.log(req.body)
     console.log({ ...req.body })
@@ -91,7 +119,7 @@ router.put('/:id', async function (req, res) {
     res.send(result);
 })
 
-router.post('/', async function (req, res) {
+router.post('/', async function (req, res) { // Create new one
     
     console.log("1111", req.body)
     console.log("2222", { ...req.body })

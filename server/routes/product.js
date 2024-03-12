@@ -111,18 +111,30 @@ router.get('/:id', function (req, res) { // Get one by id
 })
 
 router.put('/:id', async function (req, res) { // Update one by id
-    const id = req.params
+    const id = req.params.id
     console.log(req.body)
     console.log({ ...req.body })
-    const result = await models.Product.update({ id, ...req.body })
-    console.log(result)
-    res.send(result);
+    try {
+        models.Product.update({ ...req.body }, {
+            where: {
+                id
+            }
+        }).then((response)=>{
+            res.send({  
+                success: 1,
+                data: response
+            });
+        })
+    } catch(err) {
+        res.send({  
+            success: 0,
+            message: err.toString()
+        });
+    }
 })
 
 router.post('/', async function (req, res) { // Create new one
-    
-    console.log("1111", req.body)
-    console.log("2222", { ...req.body })
+
     try {
         const result = await models.Product.create({ ...req.body })
         console.log("result", result)

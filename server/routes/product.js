@@ -29,24 +29,8 @@ const Op = Sequelize.Op;
 // })
 
 
-router.get('/count', function (req, res) {
-    try {
-        models.Product.count().then((response)=>res.send({  
-            success: 1,
-            data: response
-        }))
-    }
-    catch(err) {
-        res.send({  
-            success: 0,
-            message: err.toString()
-        });
-    }
-})
-
 router.get('/', function (req, res) { // Get all with pagination
     const {limit, offset} = req.query
-    console.log(req)
     console.log(limit, offset)
     try {
         models.Product.findAll({
@@ -116,6 +100,27 @@ router.put('/:id', async function (req, res) { // Update one by id
     console.log({ ...req.body })
     try {
         models.Product.update({ ...req.body }, {
+            where: {
+                id
+            }
+        }).then((response)=>{
+            res.send({  
+                success: 1,
+                data: response
+            });
+        })
+    } catch(err) {
+        res.send({  
+            success: 0,
+            message: err.toString()
+        });
+    }
+})
+
+router.delete('/:id', async function (req, res) { // Update one by id
+    const id = req.params.id
+    try {
+        models.Product.destroy({
             where: {
                 id
             }

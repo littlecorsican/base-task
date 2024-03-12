@@ -62,3 +62,15 @@ export const request = async(url, type = "GET", body= null) => {
     console.log('response2', response2)
     return response2
 }
+
+export const addExtraZero =(string)=> {
+    if (string.length == 1) {
+        return "0" + string
+    }
+    return string
+}
+
+
+export const iSOToReadable=(datetime)=>{
+    return addExtraZero(new Date(datetime).getDate().toString()) + "-" + addExtraZero((new Date(datetime).getMonth()+1).toString()) + "-" + new Date(datetime).getFullYear()
+}

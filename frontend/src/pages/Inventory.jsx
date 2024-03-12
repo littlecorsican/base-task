@@ -7,7 +7,7 @@ import '../css/inventory.css';
 import useModal from '../hooks/useModal'
 import useProducts from '../hooks/useInventory'
 import { z } from "zod";
-import { request } from '../utils/helpers'
+import { request, iSOToReadable } from '../utils/helpers'
 
 export default function Inventory() {
 
@@ -21,7 +21,7 @@ export default function Inventory() {
 
     const { openModal:openCreateNewModal, Modal:CreateNewModal, closeModal:closeCreateNewModal } = useModal();
 
-    const CreateProduct=(e)=>{
+    const createProduct=(e)=>{
         e.preventDefault()
         console.log(e)
         global_context.setLoading(true)
@@ -50,11 +50,14 @@ export default function Inventory() {
                 price: priceRef.current.value,
             }).then((result)=>{
                 console.log("result111111111", result)
-                global_context.toast("Product Updated")
                 global_context.setLoading(false)
                 closeCreateNewModal()
-                refetch()
-                return
+                if (!result.success) {
+                    global_context.toast(`Error, ${result?.message}`)
+                } else {
+                    global_context.toast("Product Updated")
+                    refetch()
+                }
             })
         } else {
             request(`/api/inventory`, "POST", {
@@ -63,11 +66,37 @@ export default function Inventory() {
                 price: priceRef.current.value,
             }).then((result)=>{
                 console.log("result222222", result)
-                global_context.toast("Product Created")
                 global_context.setLoading(false)
                 closeCreateNewModal()
-                refetch()
+                if (!result.success) {
+                    global_context.toast(`Error, ${result?.message}`)
+                } else {
+                    global_context.toast("Product Created")
+                    refetch()
+                }
             })
+        }
+    }
+
+    const deleteProduct=(e, id)=>{
+        e.preventDefault()
+        const prompt = window.confirm("Are you really going to delete this?")
+        if (!prompt) return
+        global_context.setLoading(true)
+        try {
+            request(`/api/inventory/${id}`, "DELETE")
+            .then((result)=>{
+                console.log("result222222", result)
+                global_context.setLoading(false)
+                if (!result.success) {
+                    global_context.toast(`Error, ${result?.message}`)
+                } else {
+                    global_context.toast("Product Deleted")
+                    refetch()
+                }
+            })  
+        } catch(e) {
+            global_context.toast(`Error, ${e?.message}`)
         }
 
     }
@@ -104,6 +133,7 @@ export default function Inventory() {
                         <th>Price</th>
                         <th>Date</th>
                         <th className="small-td"></th>
+                        <th className="small-td"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -120,10 +150,10 @@ export default function Inventory() {
                                     {value?.description}
                                 </td>
                                 <td>
-                                    {value?.price}
+                                    RM {value?.price}
                                 </td>
                                 <td>
-                                    {value?.created_at}
+                                    {iSOToReadable(value?.createdAt)}
                                 </td>
                                 <td className="small-td">
                                     <button onClick={()=>{
@@ -137,6 +167,11 @@ export default function Inventory() {
                                         openCreateNewModal()
                                     }}>Edit</button>
                                 </td>
+                                <td className="small-td">
+                                    <button onClick={(e)=>{
+                                        deleteProduct(e, value?.id)
+                                    }}>Delete</button>
+                                </td>
                             </tr>
                         })
                     }
@@ -148,7 +183,7 @@ export default function Inventory() {
         </div>
       </div>
       <CreateNewModal>
-        <form onSubmit={CreateProduct}>
+        <form onSubmit={createProduct}>
             <table>
                 <tr>
                     <td align="right">
@@ -170,7 +205,7 @@ export default function Inventory() {
                 </tr>
                 <tr>
                     <td align="right">
-                        <label htmlFor="description">Price: </label>
+                        <label htmlFor="description">Price(RM): </label>
                     </td>
                     <td align="left">
                         {ModalCreate ? <input type="number" id="price" ref={priceRef} step=".01" /> : 

@@ -70,7 +70,13 @@ router.post('/login', async function (req, res) {
                     time: new Date(), 
                     email: email, 
                 }
-                const token = jwt.sign(data, process.env.JWTSECRET);
+                const token = jwt.sign(
+                    data,
+                    process.env.JWTSECRET,
+                    { 
+                        expiresIn: '1h'
+                    }
+                );
                 res.status(200).send({
                     success: 1,
                     message: "",

@@ -14,13 +14,18 @@ export default function Inventory() {
     const nameRef = useRef()
     const descriptionRef = useRef()
     const priceRef = useRef()
+    const filterRef = useRef()
     const global_context = useContext(GlobalContext)
     const limit = 10
     //let offset = 0
     const [offset, setOffset] = useState(0)
     const [ModalCreate, setModalCreate] = useState(false)  // whether the modal is for create or update
     const [currentSelected, setCurrentSelected] = useState({})
-    const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading, refetch } = useProducts({limit:limit, offset:offset})
+    const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading, refetch } = useProducts({
+        limit:limit,
+        offset:offset,
+        filter: filterRef.current.value
+    })
 
     const { openModal:openCreateNewModal, Modal:CreateNewModal, closeModal:closeCreateNewModal } = useModal();
 
@@ -128,8 +133,8 @@ export default function Inventory() {
             isInventoryError && <div>{inventoryError?.message}</div>
         }
         <div>
-            <div>
-                Filter
+            <div className="my-2 py-1">
+                Filter: <input type="text" ref={filterRef} />
             </div>
             <table border="1" className="bordered-table">
                 <thead>

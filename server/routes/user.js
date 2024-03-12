@@ -74,7 +74,7 @@ router.post('/login', async function (req, res) {
                     data,
                     process.env.JWTSECRET,
                     { 
-                        expiresIn: '1h'
+                        expiresIn: '1m'
                     }
                 );
                 res.status(200).send({

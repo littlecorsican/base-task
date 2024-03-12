@@ -111,7 +111,7 @@ router.post('/register', async function (req, res) {
                     const result = await models.User.create({ ...req.body, password: hash, rank: 1 })
                     console.log("result", result)
                     if (result) {
-                        res.status(200).send({
+                        return res.status(200).send({
                             success: 1,
                             message: "Register success"
                         })

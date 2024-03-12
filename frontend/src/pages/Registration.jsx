@@ -14,31 +14,38 @@ export default function LoginPage() {
 
   const user_password = useRef(null);
   const user_repassword = useRef(null);
-  const user_username = useRef(null);
+  const user_email = useRef(null);
+  const user_name = useRef(null);
 
   const [loginErrorMsg, setLoginErrorMessage] = useState("");
 
   const {mutate:userRegistration, isPending:isPending} = useMutation({
     mutationFn: async (e) => {
       e.preventDefault();
-      if (!user_username.current || !user_password.current || !user_repassword.current) return;
+      if (!user_email.current || !user_password.current || !user_repassword.current) return;
   
-      const username = user_username.current.value;
+      const email = user_email.current.value;
       const password = user_password.current.value;
       const repassword = user_repassword.current.value;
+      const name = user_name.current.value;
       const authInputSchema = z.object({
-        username: z.string().email(),
+        email: z.string().email(),
         password: z.string().min(6),
         repassword: z.string().min(6),
+        name: z.string()
+      }).refine((data) => data.password === data.repassword, {
+        message: "Passwords don't match",
+        path: ["confirm"],
       });
   
       authInputSchema.parse({
-        username,
+        email,
         password,
-        repassword
+        repassword,
+        name
       });
 
-      register(username, password, repassword);
+      register(email, name, password, repassword);
     },
     onError: (error) => {
       console.error(error)
@@ -46,14 +53,14 @@ export default function LoginPage() {
     },
   })
 
-  const register=async(email, password, repassword)=>{
+  const register=async(email, name, password, repassword)=>{
     global_context.setLoading(true);
     const response = await fetch(`${base}/api/user/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: email, password: password, repassword: repassword }),
+      body: JSON.stringify({ email: email, name: name, password: password, repassword: repassword }),
     });
     global_context.setLoading(false);
     if (!response.ok) {
@@ -82,16 +89,32 @@ export default function LoginPage() {
           <p className="text-red-500">{loginErrorMsg}</p>
           <div className="mb-4">
             <label
-              htmlFor="username"
+              htmlFor="email"
               className="block text-gray-700 font-semibold"
             >
               Email
             </label>
             <input
               type="email"
+              id="email"
+              name="email"
+              ref={user_email}
+              className="w-full border px-4 py-2 rounded-lg focus:ring focus:ring-blue-200"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="username"
+              className="block text-gray-700 font-semibold"
+            >
+              Name
+            </label>
+            <input
+              type="text"
               id="username"
               name="username"
-              ref={user_username}
+              ref={user_name}
               className="w-full border px-4 py-2 rounded-lg focus:ring focus:ring-blue-200"
               required
             />

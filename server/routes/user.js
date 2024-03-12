@@ -8,12 +8,7 @@ const models = require('../models/index')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
-const genSaltAndHash = require('../helpers.js')
 
-router.get('/testHash', function (req, res) {
-    const r = genSaltAndHash("1234567")
-    res.send(r)
-})
 
 router.get('/:id', function (req, res) {
     const id = req.params
@@ -43,8 +38,17 @@ router.post('/login', async function (req, res) {
     console.log(req.body)
     const email = req.body.email
     
-    models.User.findOne({ where: { email } }).then((user)=>{
+    models.User.findOne({ 
+        where: { email },
+        include: [
+            {
+                model: models.User_Permission, 
+                as: 'user_permission'
+            }
+        ]
+    }).then((user)=>{
         console.log("user", user)
+        console.log("user_permission", user.user_permission)
         if (!user) {
             res.status(401).send({
                 success: 0,

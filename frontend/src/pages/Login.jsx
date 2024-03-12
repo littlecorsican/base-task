@@ -76,7 +76,7 @@ export default function LoginPage() {
     <div className="flex items-center justify-center min-h-screen">
       <div className="login-container w-96 p-8">
         <h1 className="text-3xl font-semibold text-center mb-6">
-          Kanban Board Login
+          Login
         </h1>
         <form onSubmit={(e)=>void userLogin(e)}>
           <p className="text-red-500">{loginErrorMsg}</p>

@@ -68,24 +68,31 @@ export default function Inventory() {
             <div>
                 Filter
             </div>
-            <table border="1">
+            <table border="1" className="bordered-table">
                 <thead>
                     <tr>
-                        <th style={{ minWidth: "20px" }}>ID</th>
+                        <th className="small-td">ID</th>
                         <th>Product Name</th>
                         <th>Product Description</th>
+                        <th className="small-td"></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         !isInventoryLoading && inventory.map((value)=>{
-                            <tr key={value?.id}>
-                                <th>
+                            return<tr key={value?.id}>
+                                <td className="small-td">
+                                    {value?.id}
+                                </td>
+                                <td>
                                     {value?.name}
-                                </th>
-                                <th>
+                                </td>
+                                <td>
                                     {value?.description}
-                                </th>
+                                </td>
+                                <td className="small-td">
+                                    <button>Edit</button>
+                                </td>
                             </tr>
                         })
                     }

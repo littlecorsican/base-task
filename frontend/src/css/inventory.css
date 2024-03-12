@@ -27,12 +27,16 @@ textarea {
     width: var(--inputWidth);
 }
 
-td, th {
-    min-width: 200px;
+.bordered-table td, th {
     border: 1px solid;
+    padding: 0 15px;
 }
 
-table {
+.small-td {
+    width: 20px !important
+}
+
+.bordered-table {
     width: 100%;
     border: 1px solid;
     border-collapse: collapse;

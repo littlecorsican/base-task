@@ -55,11 +55,23 @@ export default function Layout({  }) {
               </a>
             })
           }
-          <div className="m-auto">
-            {global_context.user !== null && <button className="nav_item" onClick={logout}>Logout</button>}
-            {global_context.user === null && <button className="nav_item"><a href="/register">Register</a></button>}
-            {global_context.user === null && <button className="nav_item"><a href="/login">Login</a></button>}
-          </div>
+          {global_context.user !== null && <div className="nav_item" onClick={logout}>
+            <div className=""><img src="" /></div>
+            <div className="">Logout</div>
+          </div>}
+          {global_context.user === null && 
+          <a href="/register" className="m-auto">
+              <div className="nav_item">
+                <div className=""><img src="" /></div>
+                <div className="">Register</div>
+              </div>
+            </a>}
+          {global_context.user === null &&
+          <a href="/login" className="m-auto">
+            <div className="nav_item">
+              <div className=""><img src="" /></div>
+              <div className="">Login</div>
+          </div></a>}
         </nav>
         <div className="w-full">
           <Outlet />

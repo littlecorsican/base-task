@@ -55,6 +55,13 @@ export default function Layout({  }) {
               </a>
             })
           }
+          {global_context.user === null &&
+          global_context.user?.permission.includes("view_permission") &&
+          <a href="/login" className="m-auto">
+            <div className="nav_item">
+              <div className=""><img src="" /></div>
+              <div className="">Admin</div>
+          </div></a>}
           {global_context.user !== null && <div className="nav_item" onClick={logout}>
             <div className=""><img src="" /></div>
             <div className="">Logout</div>

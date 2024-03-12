@@ -1,6 +1,4 @@
 'use strict';
-import { hash } from '../helpers'
-require('dotenv').config()
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -14,12 +12,31 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('user', [{
-      id: 1,
-      name: "superadmin",
-      email: "root@root.com",
-      password: hash(process.env.JWTSECRET, 10, "1234567")
-    }], {});
+    await queryInterface.bulkInsert('user_permission', [{
+      user_id: 1,
+      permission_id: 1
+    },
+    {
+      user_id: 1,
+      permission_id: 2
+    },
+    {
+      user_id: 1,
+      permission_id: 3
+    },
+    {
+      user_id: 1,
+      permission_id: 4
+    },
+    {
+      user_id: 1,
+      permission_id: 5
+    },
+    {
+      user_id: 1,
+      permission_id: 6
+    }
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -29,6 +46,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('user', null, {});
+    await queryInterface.bulkDelete('user_permission', null, {});
   }
 };

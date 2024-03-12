@@ -17,7 +17,7 @@ export const request = async(url, type = "GET", body= null) => {
                 'Content-Type': 'application/json',
                 'Authentication': `Bearer ${access_token}`
             },
-            body: body,
+            body: JSON.stringify(body)
             });
             console.log('response', response)
             const response2 = await response.json()
@@ -30,7 +30,7 @@ export const request = async(url, type = "GET", body= null) => {
                 'Content-Type': 'application/json',
                 'Authentication': `Bearer ${access_token}`
             },
-            body: body,
+            body: JSON.stringify(body)
             });
             console.log('response', response)
             const response2 = await response.json()

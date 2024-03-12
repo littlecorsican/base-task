@@ -13,8 +13,11 @@ export default function Inventory() {
 
     const nameRef = useRef()
     const descriptionRef = useRef()
+    const priceRef = useRef()
     const global_context = useContext(GlobalContext)
-    const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading } = useProducts({limit:10, offset:0})
+    const [ModalCreate, setModalCreate] = useState(false)  // whether the modal is for create or update
+    const [currentSelected, setCurrentSelected] = useState({})
+    const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading, refetch } = useProducts({limit:10, offset:0})
 
     const { openModal:openCreateNewModal, Modal:CreateNewModal, closeModal:closeCreateNewModal } = useModal();
 
@@ -25,10 +28,12 @@ export default function Inventory() {
         const schema = z.object({
             name: z.string(),
             description: z.string(),
+            price: z.coerce.number(),
         });
         const result = schema.safeParse({
             name: nameRef.current.value,
             description: descriptionRef.current.value,
+            price: priceRef.current.value,
         })
         console.log(result)
 
@@ -38,13 +43,32 @@ export default function Inventory() {
             return
         }
 
-        request(`/api/inventory`, "POST", {
-            name: nameRef.current.value,
-            description: descriptionRef.current.value
-        }).then((result)=>{
-            console.log("result", result)
-            global_context.setLoading(false)
-        })
+        if (!ModalCreate) {
+            request(`/api/inventory/${currentSelected?.id}`, "PUT", {
+                name: nameRef.current.value,
+                description: descriptionRef.current.value,
+                price: priceRef.current.value,
+            }).then((result)=>{
+                console.log("result111111111", result)
+                global_context.toast("Product Updated")
+                global_context.setLoading(false)
+                closeCreateNewModal()
+                refetch()
+                return
+            })
+        } else {
+            request(`/api/inventory`, "POST", {
+                name: nameRef.current.value,
+                description: descriptionRef.current.value,
+                price: priceRef.current.value,
+            }).then((result)=>{
+                console.log("result222222", result)
+                global_context.toast("Product Created")
+                global_context.setLoading(false)
+                closeCreateNewModal()
+                refetch()
+            })
+        }
 
     }
 
@@ -52,7 +76,10 @@ export default function Inventory() {
     <>
       <div className="flex flex-row justify-between px-4 py-2">
         <button
-          onClick={openCreateNewModal}
+          onClick={()=>{
+            setModalCreate(true)
+            openCreateNewModal()
+          }}
         >
           Create New Inventory
         </button>
@@ -81,7 +108,7 @@ export default function Inventory() {
                 </thead>
                 <tbody>
                     {
-                        !isInventoryLoading && inventory.map((value)=>{
+                        !isInventoryLoading && inventory && inventory.map((value)=>{
                             return<tr key={value?.id}>
                                 <td className="small-td">
                                     {value?.id}
@@ -99,7 +126,16 @@ export default function Inventory() {
                                     {value?.created_at}
                                 </td>
                                 <td className="small-td">
-                                    <button>Edit</button>
+                                    <button onClick={()=>{
+                                        setCurrentSelected({
+                                            id: value?.id,
+                                            name: value?.name,
+                                            description: value?.description,
+                                            price: value?.price
+                                        })
+                                        setModalCreate(false)
+                                        openCreateNewModal()
+                                    }}>Edit</button>
                                 </td>
                             </tr>
                         })
@@ -119,7 +155,8 @@ export default function Inventory() {
                         <label htmlFor="product_name">Product Name: </label>
                     </td>
                     <td align="left">
-                        <input type="text" id="product_name" ref={nameRef} />
+                        {ModalCreate ? <input type="text" id="product_name" ref={nameRef} /> :
+                        <input type="text" id="product_name" ref={nameRef} defaultValue={currentSelected?.name} />}
                     </td>
                 </tr>
                 <tr>
@@ -127,15 +164,21 @@ export default function Inventory() {
                         <label htmlFor="description">Product Description: </label>
                     </td>
                     <td align="left">
-                        <textarea id="description" rows="5" ref={descriptionRef} ></textarea>
+                        {ModalCreate ? <textarea id="description" rows="5" ref={descriptionRef} ></textarea> :
+                        <textarea id="description" rows="5" ref={descriptionRef} >{currentSelected?.description}</textarea> }
                     </td>
                 </tr>
-                {/* <tr>
-                    <td align="right">Email:</td>
-                    <td align="left"><input type="text" name="email" /></td>
-                </tr> */}
+                <tr>
+                    <td align="right">
+                        <label htmlFor="description">Price: </label>
+                    </td>
+                    <td align="left">
+                        {ModalCreate ? <input type="number" id="price" ref={priceRef} step=".01" /> : 
+                        <input type="number" id="price" ref={priceRef} step=".01" defaultValue={currentSelected?.price} /> }
+                    </td>
+                </tr>
             </table>
-            <button>Create</button>
+            {ModalCreate ? <button>Create</button> : <button>Update</button>}
         </form>
       </CreateNewModal>
     </>

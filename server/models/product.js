@@ -18,12 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     price: DataTypes.DECIMAL,
-    created_at: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Product',
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
   });
   return Product;
 };

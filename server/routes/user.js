@@ -173,7 +173,60 @@ router.post('/verify', async function (req, res) {
     
         return res.status(200).send({ success: 1, message: "authentication success" });
     })
-    
+})
+
+router.post('/grantpermission/:id', async function (req, res) {
+    const id = req.params.id
+    const permission = req.body.permission
+    console.log(req.body, id)
+    try {
+        let result = await models.User_Permission.findOne({ where: { user_id: id, permission_id: permission } })
+        console.log(req.body.permission)
+        if (result) {
+            return res.status(200).send({
+                success: 0,
+                message: "User already have that permission"
+            })
+        }
+        result = await models.User_Permission.create({ user_id: id, permission_id: permission })
+        console.log(result)
+        return res.status(200).send({
+            success: 1,
+            message: "Permission granted"
+        })
+    } catch (e) {
+        return res.status(500).send({
+            success: 0,
+            message: e.toString()
+        })
+    }
+})
+
+router.post('/removepermission/:id', async function (req, res) {
+    const id = req.params.id
+    const permission = req.body.permission
+    console.log(req.body, id)
+    try {
+        let result = await models.User_Permission.findOne({ where: { user_id: id, permission_id: permission } })
+        console.log(req.body.permission)
+        if (!result) {
+            return res.status(200).send({
+                success: 0,
+                message: "User dont have that permission"
+            })
+        }
+        result = await models.User_Permission.destroy({ where: { user_id: id, permission_id: permission } })
+        console.log(result)
+        return res.status(200).send({
+            success: 1,
+            message: "Permission revoked"
+        })
+    } catch (e) {
+        return res.status(500).send({
+            success: 0,
+            message: e.toString()
+        })
+    }
 })
 
 module.exports = router

@@ -1,5 +1,15 @@
+# This is an express/node app
+
+## set up instructions
+
+1) Create a blank copy of sqllite db and name it db.sqlite3 and place it in root folder
+2) Run the migration command npx sequelize-cli db:migrate
+3) Run the seed command npx sequelize-cli db:seed:all
+4) npm install
+5) npm start
 
 
+# Notes
 ## Sequelize commands
 
 ### Generate model

@@ -15,9 +15,45 @@ export default function Admin() {
     const { data:users,
         isError:isUsersError,
         error:usersError,
-        isLoading:isUserLoading
+        isLoading:isUserLoading,
+        refetch
     } = useUser({limit:10, offset:0})
 
+    const handleGrant=(id)=>{
+        global_context.setLoading(true)
+        request(`/api/user/grantpermission/${id}`, "POST", {
+            permissions: [
+                5,6
+            ]
+        }).then((result)=>{
+            console.log("result", result)
+            global_context.setLoading(false)
+            if (!result.success) {
+                global_context.toast(`Error, ${result?.message}`)
+            } else {
+                global_context.toast("Admin priviledge granted")
+                refetch()
+            }
+        })
+    }
+
+    const removeAdmin=(id)=>{
+        global_context.setLoading(true)
+        request(`/api/user/removepermission/${id}`, "POST", {
+            permissions: [
+                5,6
+            ]
+        }).then((result)=>{
+            console.log("result", result)
+            global_context.setLoading(false)
+            if (!result.success) {
+                global_context.toast(`Error, ${result?.message}`)
+            } else {
+                global_context.toast("Admin priviledge removed")
+                refetch()
+            }
+        })
+    }
 
     return (
         <div className="flex items-center justify-center min-h-screen">
@@ -38,9 +74,9 @@ export default function Admin() {
                             <thead>
                                 <tr>
                                     <th className="small-td">ID</th>
-                                    <th>Product Name</th>
-                                    <th>Product Description</th>
-                                    <th className="small-td"></th>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,13 +87,14 @@ export default function Admin() {
                                                 {value?.id}
                                             </td>
                                             <td>
+                                                {value?.email}
+                                            </td>
+                                            <td>
                                                 {value?.name}
                                             </td>
                                             <td>
-                                                {value?.description}
-                                            </td>
-                                            <td className="small-td">
-                                                <button>Edit</button>
+                                                <button onClick={()=>handleGrant(value?.id)}>Grant Admin Priviledge</button>
+                                                <button onClick={()=>removeAdmin(value?.id)}>Remove Admin Priviledge</button>
                                             </td>
                                         </tr>
                                     })

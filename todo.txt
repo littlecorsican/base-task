@@ -1,0 +1,8 @@
+TODO
+- unit test
+- admin page
+- auth with refresh token
+- jwt sign with user_permission
+- inventory + filter + sort
+- deploy
+- edit Readme

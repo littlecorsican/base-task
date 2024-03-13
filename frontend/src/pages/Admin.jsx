@@ -19,37 +19,33 @@ export default function Admin() {
         refetch
     } = useUser({limit:10, offset:0})
 
-    const handleGrant=(id)=>{
+    const handleGrant=(id, permission)=>{
         global_context.setLoading(true)
         request(`/api/user/grantpermission/${id}`, "POST", {
-            permissions: [
-                5,6
-            ]
+            permission
         }).then((result)=>{
             console.log("result", result)
             global_context.setLoading(false)
             if (!result.success) {
                 global_context.toast(`Error, ${result?.message}`)
             } else {
-                global_context.toast("Admin priviledge granted")
+                global_context.toast("Priviledge granted")
                 refetch()
             }
         })
     }
 
-    const removeAdmin=(id)=>{
+    const removeAdmin=(id, permission)=>{
         global_context.setLoading(true)
         request(`/api/user/removepermission/${id}`, "POST", {
-            permissions: [
-                5,6
-            ]
+            permission
         }).then((result)=>{
             console.log("result", result)
             global_context.setLoading(false)
             if (!result.success) {
                 global_context.toast(`Error, ${result?.message}`)
             } else {
-                global_context.toast("Admin priviledge removed")
+                global_context.toast("Priviledge removed")
                 refetch()
             }
         })
@@ -93,8 +89,14 @@ export default function Admin() {
                                                 {value?.name}
                                             </td>
                                             <td>
-                                                <button onClick={()=>handleGrant(value?.id)}>Grant Admin Priviledge</button>
-                                                <button onClick={()=>removeAdmin(value?.id)}>Remove Admin Priviledge</button>
+                                                {
+                                                    value?.user_permission?.map((value)=>{
+                                                        return <button onClick={()=>removeAdmin(value?.id)}>
+                                                            Remove {value?.permission?.name} Priviledge
+                                                        </button>
+                                                    })
+                                                }
+                                                <button onClick={()=>handleGrant(value?.id)}>Grant View Admin Priviledge</button>
                                             </td>
                                         </tr>
                                     })

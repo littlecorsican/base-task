@@ -19,7 +19,19 @@ router.get('/:id', function (req, res) {
 
 router.get('/', function (req, res) {
     models.User.findAll({
-        attributes: ['id', 'name']
+        attributes: ['id', 'email', 'name'],
+        include: [
+            {
+                model: models.User_Permission, 
+                as: 'user_permission',
+                include: [
+                    {
+                        model: models.Permission,
+                        as: 'permission',
+                    }
+                ]
+            }
+        ]
     })
     .then((response)=>res.send(response))
 })

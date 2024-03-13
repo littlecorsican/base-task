@@ -18,7 +18,10 @@ router.get('/:id', function (req, res) {
 })
 
 router.get('/', function (req, res) {
+    const {limit, offset} = req.query
     models.User.findAll({
+        limit: limit,
+        offset: offset,
         attributes: ['id', 'email', 'name'],
         include: [
             {
@@ -33,7 +36,12 @@ router.get('/', function (req, res) {
             }
         ]
     })
-    .then((response)=>res.send(response))
+    .then((response)=>res.send({  
+        success: 1,
+        data: response,
+        limit: limit,
+        offset: offset
+    }))
 })
 
 router.put('/:id', async function (req, res) {
@@ -190,9 +198,11 @@ router.post('/verify', async function (req, res) {
 router.post('/grantpermission/:id', async function (req, res) {
     const id = req.params.id
     const permission = req.body.permission
-    console.log(req.body, id)
+    console.log("1111", permission, id)
     try {
-        let result = await models.User_Permission.findOne({ where: { user_id: id, permission_id: permission } })
+        let permission_code = await models.Permission.findOne({ where: { name: permission } })
+        console.log("permission_code", permission_code, permission_code.id)
+        let result = await models.User_Permission.findOne({ where: { user_id: id, permission_id: permission_code.id } })
         console.log(req.body.permission)
         if (result) {
             return res.status(200).send({
@@ -200,7 +210,7 @@ router.post('/grantpermission/:id', async function (req, res) {
                 message: "User already have that permission"
             })
         }
-        result = await models.User_Permission.create({ user_id: id, permission_id: permission })
+        result = await models.User_Permission.create({ user_id: id, permission_id: permission_code.id })
         console.log(result)
         return res.status(200).send({
             success: 1,
@@ -217,9 +227,11 @@ router.post('/grantpermission/:id', async function (req, res) {
 router.post('/removepermission/:id', async function (req, res) {
     const id = req.params.id
     const permission = req.body.permission
-    console.log(req.body, id)
+    console.log(permission, id)
     try {
-        let result = await models.User_Permission.findOne({ where: { user_id: id, permission_id: permission } })
+        // find ID of that permission code
+        let permission_code = await models.Permission.findOne({ where: { name: permission } })
+        let result = await models.User_Permission.findOne({ where: { user_id: id, permission_id: permission_code.id } })
         console.log(req.body.permission)
         if (!result) {
             return res.status(200).send({
@@ -227,7 +239,7 @@ router.post('/removepermission/:id', async function (req, res) {
                 message: "User dont have that permission"
             })
         }
-        result = await models.User_Permission.destroy({ where: { user_id: id, permission_id: permission } })
+        result = await models.User_Permission.destroy({ where: { user_id: id, permission_id: permission_code.id } })
         console.log(result)
         return res.status(200).send({
             success: 1,

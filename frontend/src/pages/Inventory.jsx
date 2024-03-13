@@ -17,20 +17,18 @@ export default function Inventory() {
     const filterRef = useRef()
     const global_context = useContext(GlobalContext)
     const limit = 10
-    //let offset = 0
     const [offset, setOffset] = useState(0)
     const [ModalCreate, setModalCreate] = useState(false)  // whether the modal is for create or update
     const [currentSelected, setCurrentSelected] = useState({})
     const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading, refetch } = useProducts({
         limit:limit,
         offset:offset,
-        filter: filterRef.current.value
     })
 
     const { openModal:openCreateNewModal, Modal:CreateNewModal, closeModal:closeCreateNewModal } = useModal();
 
     useEffect(()=>{
-        refetch()
+        refetch({limit:limit, offset:offset})
     },[offset])
 
     const createProduct=(e)=>{
@@ -192,7 +190,7 @@ export default function Inventory() {
             {/* PAGINATION */}
             <div className="flex flex-row justify-around my-2">
                 <div>
-                    Page: {offset}
+                    Page: {offset/limit+1}
                 </div>
                 <div>
                     Rows Per Page:{limit}

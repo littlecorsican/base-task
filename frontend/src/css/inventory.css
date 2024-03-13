@@ -40,5 +40,6 @@ textarea {
 .bordered-table {
     width: 100%;
     border: 1px solid;
+    min-width: 50vw;
     border-collapse: collapse;
 }

@@ -8,35 +8,51 @@ import useUser from '../hooks/useUser'
 import '../css/inventory.css';
 import useModal from '../hooks/useModal'
 import { z } from "zod";
+import { permissions } from '../enums/permissions'
 
 export default function Admin() {
 
     const global_context = useContext(GlobalContext)
+    const limit = 10
+    const [offset, setOffset] = useState(0)
+
+
     const { data:users,
         isError:isUsersError,
         error:usersError,
         isLoading:isUserLoading,
         refetch
-    } = useUser({limit:10, offset:0})
+    } = useUser({limit:limit, offset:offset})
+
+    useEffect(()=>{
+        console.log( "offset1", offset)
+        refetch({limit:limit, offset:offset})
+    },[offset])
 
     const handleGrant=(id, permission)=>{
         global_context.setLoading(true)
-        request(`/api/user/grantpermission/${id}`, "POST", {
-            permission
-        }).then((result)=>{
-            console.log("result", result)
+        try {
+            request(`/api/user/grantpermission/${id}`, "POST", {
+                permission
+            }).then((result)=>{
+                console.log("result", result)
+                global_context.setLoading(false)
+                if (!result.success) {
+                    global_context.toast(`Error, ${result?.message}`)
+                } else {
+                    global_context.toast("Priviledge granted")
+                    refetch()
+                }
+            })
+        } catch {
             global_context.setLoading(false)
-            if (!result.success) {
-                global_context.toast(`Error, ${result?.message}`)
-            } else {
-                global_context.toast("Priviledge granted")
-                refetch()
-            }
-        })
+            global_context.toast("Error")
+        }
     }
 
     const removeAdmin=(id, permission)=>{
         global_context.setLoading(true)
+        try {
         request(`/api/user/removepermission/${id}`, "POST", {
             permission
         }).then((result)=>{
@@ -49,7 +65,15 @@ export default function Admin() {
                 refetch()
             }
         })
+        } catch(e) {
+            global_context.setLoading(false)
+            global_context.toast("Error")
+        }
     }
+
+    useEffect(()=>{
+        console.log("usersError", usersError, users)
+    },[usersError])
 
     return (
         <div className="flex items-center justify-center min-h-screen">
@@ -60,7 +84,7 @@ export default function Admin() {
                         isUserLoading && <div>User list is loading....</div>
                     }
                     {
-                        isUsersError && <div>{usersError}</div>
+                        isUsersError && <div>{usersError?.message}</div>
                     }
                     <div>
                         <div>
@@ -77,7 +101,7 @@ export default function Admin() {
                             </thead>
                             <tbody>
                                 {
-                                    !isUserLoading && users.map((value)=>{
+                                    !isUserLoading && !isUsersError && users && users.map((value)=>{
                                         return<tr key={value?.id}>
                                             <td className="small-td">
                                                 {value?.id}
@@ -88,22 +112,42 @@ export default function Admin() {
                                             <td>
                                                 {value?.name}
                                             </td>
-                                            <td>
+                                            <td className="flex flex-col">
                                                 {
-                                                    value?.user_permission?.map((value)=>{
-                                                        return <button onClick={()=>removeAdmin(value?.id)}>
-                                                            Remove {value?.permission?.name} Priviledge
+                                                    Object.keys(permissions).map((permission)=>{
+                                                        if (value?.user_permission.find((user_permission)=>user_permission?.permission?.name === permission)) {
+                                                            return <button onClick={()=>removeAdmin(value?.id, permission)} key={permission}>
+                                                                Remove {permissions[permission]} Priviledge
+                                                            </button>
+                                                        }
+                                                        return <button onClick={()=>handleGrant(value?.id, permission)} key={permission}>
+                                                            Grant {permissions[permission]} Priviledge
                                                         </button>
                                                     })
                                                 }
-                                                <button onClick={()=>handleGrant(value?.id)}>Grant View Admin Priviledge</button>
                                             </td>
                                         </tr>
                                     })
                                 }
                             </tbody>
                         </table>
-                        <div>
+                        {/* PAGINATION */}
+                        <div className="flex flex-row justify-around my-2">
+                            <div>
+                                Page: {offset/limit+1}
+                            </div>
+                            <div>
+                                Rows Per Page:{limit}
+                            </div>
+                            <div>
+                                <button onClick={()=>{
+                                    if (offset === 0) return
+                                    setOffset((offset)=>offset-limit)
+                                }}> Back </button>
+                                <button onClick={()=>{
+                                    setOffset((offset)=>offset+limit)
+                                }}> Next </button>
+                            </div>
 
                         </div>
                     </div>

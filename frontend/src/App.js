@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import Login from "./pages/Login";
 import Container from "./pages/Container";
+import Admin from "./pages/Admin";
 import Inventory from "./pages/Inventory";
 import Dashboard from "./pages/Dashboard";
 import Registration from "./pages/Registration";
@@ -92,6 +93,11 @@ export default function App() {
               <Route path="inventory/:id" element={
                 <ProtectedRoute redirectPath="/login">
                   <Inventory />
+                </ProtectedRoute>} 
+              />
+              <Route path="admin" element={
+                <ProtectedRoute redirectPath="/login">
+                  <Admin />
                 </ProtectedRoute>} 
               />
               <Route path="*" element={<NoPage />} />

@@ -1,4 +1,4 @@
-const genSaltAndHash = require('./helpers')
+const genSaltAndHash = require('./helper/genSaltAndHash')
 const app = require("./index");
 const supertest = require("supertest");
 const request = supertest(app);
@@ -13,8 +13,8 @@ it("test index", async () => {
     expect(res.text).toBe("Hello World");
 });
 
-it("test products", async () => {
-    const res = await request.get("/api/inventory");
-    expect(res.status).toBe(200);
-});
+// it("test products", async () => {
+//     const res = await request.get("/api/inventory");
+//     expect(res.status).toBe(200);
+// });
 

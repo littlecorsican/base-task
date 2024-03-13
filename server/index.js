@@ -10,12 +10,10 @@ const router = express.Router()
 
 const userRoute=require('./routes/user')
 const productRoute=require('./routes/product')
-const containerRoute=require('./routes/container')
 const dashboardRoute=require('./routes/dashboard')
 
 app.use('/api/user', userRoute)
 app.use('/api/inventory', productRoute)
-app.use('/api/container', containerRoute)
 app.use('/api/dashboard', dashboardRoute)
 
 // router.use(() => {}); // General middleware

@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      //this.hasOne(models.Container, { as: 'container', foreignKey: 'id', sourceKey: 'container_id' });
     }
   }
   Product.init({

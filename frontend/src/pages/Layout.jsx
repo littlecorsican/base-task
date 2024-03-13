@@ -21,11 +21,6 @@ export default function Layout({  }) {
         icon: "",
       },
     {
-      title: "Containers",
-      url: "/container",
-      icon: "",
-    },
-    {
         title: "Inventory",
         url: "/inventory",
         icon: "",

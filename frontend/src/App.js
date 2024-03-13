@@ -8,7 +8,6 @@ import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import Login from "./pages/Login";
-import Container from "./pages/Container";
 import Admin from "./pages/Admin";
 import Inventory from "./pages/Inventory";
 import Dashboard from "./pages/Dashboard";
@@ -75,19 +74,9 @@ export default function App() {
                   <Dashboard />
                 </ProtectedRoute>} 
               />
-              <Route path="container" element={
-                <ProtectedRoute redirectPath="/login">
-                  <Container />
-                </ProtectedRoute>} 
-              />
               <Route path="inventory" element={
                 <ProtectedRoute redirectPath="/login">
                   <Inventory />
-                </ProtectedRoute>} 
-              />
-              <Route path="container/:id" element={
-                <ProtectedRoute redirectPath="/login">
-                  <Container />
                 </ProtectedRoute>} 
               />
               <Route path="inventory/:id" element={

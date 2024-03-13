@@ -13,8 +13,13 @@ it("test index", async () => {
     expect(res.text).toBe("Hello World");
 });
 
-// it("test products", async () => {
-//     const res = await request.get("/api/inventory");
-//     expect(res.status).toBe(200);
-// });
+it("test products", async () => {
+    const res = await request.get("/api/inventory");
+    expect(res.status).toBe(401);
+});
+
+it("test dashboard", async () => {
+    const res = await request.get("/api/dashboard");
+    expect(res.status).toBe(401);
+});
 

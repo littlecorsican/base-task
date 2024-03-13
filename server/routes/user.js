@@ -7,6 +7,7 @@ router.use(bodyParser.json());
 const models = require('../models/index')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { Sequelize } = require('sequelize');
 require('dotenv').config()
 
 
@@ -108,18 +109,49 @@ router.post('/register', async function (req, res) {
                 console.log("salt", salt, err)
                 bcrypt.hash(req.body.password, salt, async function(err, hash) {
                     console.log("hash", hash, err)
-                    const result = await models.User.create({ ...req.body, password: hash, rank: 1 })
-                    console.log("result", result)
-                    if (result) {
-                        return res.status(200).send({
-                            success: 1,
-                            message: "Register success"
+                    try {
+                        await models.sequelize.transaction(async function(transaction) {
+                            const user = await models.User.create(
+                                { ...req.body, password: hash},
+                                {transaction}
+                            )
+                            const id = user.dataValues.id
+                            const user_permission_1 = await models.User_Permission.create(
+                                { user_id: id, permission_id: 1 },
+                                {transaction}
+                            )
+                            const user_permission_2 = await models.User_Permission.create(
+                                { user_id: id, permission_id: 2 },
+                                {transaction}
+                            )
+                            const user_permission_3 = await models.User_Permission.create(
+                                { user_id: id, permission_id: 3 },
+                                {transaction}
+                            )
+                            const user_permission_4 = await models.User_Permission.create(
+                                { user_id: id, permission_id: 4 },
+                                {transaction}
+                            )
+                            console.log("user", user)
+                            if (user) {
+                                return res.status(200).send({
+                                    success: 1,
+                                    message: "Register success"
+                                })
+                            }
+                            res.status(401).send({
+                                success: 0,
+                                message: "Registeration failed"
+                            })
+
+                        });
+                    } catch (e) {
+                        console.log("E", e)
+                        res.status(401).send({
+                            success: 0,
+                            message: "Registeration failed"
                         })
                     }
-                    res.status(401).send({
-                        success: 0,
-                        message: "Registeration failed"
-                    })
                 });
             });
         }

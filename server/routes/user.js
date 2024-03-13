@@ -89,15 +89,21 @@ router.post('/login', async function (req, res) {
 
                 let data = { 
                     time: new Date(), 
-                    email: email, 
+                    email: user.email,
+                    id: user.id,
+                    permissions: [
+                        ...user.user_permission
+                    ]
                 }
+                console.log("data", data)
                 const token = jwt.sign(
                     data,
                     process.env.JWTSECRET,
                     { 
-                        expiresIn: '1m'
+                        expiresIn: '15m'
                     }
                 );
+                console.log("token", token)
                 res.status(200).send({
                     success: 1,
                     message: "",

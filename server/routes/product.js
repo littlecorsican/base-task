@@ -10,23 +10,23 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 const Op = Sequelize.Op; 
 
-// router.use((req, res, next) => {
-//     //console.log("req", req)
-//     if (!req.headers.authentication) {
-//         return res.status(401).send({ success: 0, message: "authentication failed" });
-//     }
-//     const access_token = req.headers.authentication.split(' ')[1];
-//     console.log("access_token", access_token, process.env.JWTSECRET)
-//     jwt.verify(access_token, process.env.JWTSECRET, (err, user) => {
+router.use((req, res, next) => {
+    //console.log("req", req)
+    if (!req.headers.authentication) {
+        return res.status(401).send({ success: 0, message: "authentication failed" });
+    }
+    const access_token = req.headers.authentication.split(' ')[1];
+    console.log("access_token", access_token, process.env.JWTSECRET)
+    jwt.verify(access_token, process.env.JWTSECRET, (err, user) => {
        
-//        console.log("err", err)
-//        if (err) return res.status(401).send({ success: 0, message: "authentication failed" });
-//        console.log("user", user)
+       console.log("err", err)
+       if (err) return res.status(401).send({ success: 0, message: "authentication failed" });
+       console.log("user", user)
    
-//        next()
-//     })
+       next()
+    })
  
-// })
+})
 
 
 router.get('/', function (req, res) { // Get all with pagination

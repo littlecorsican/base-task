@@ -13,7 +13,6 @@ import Inventory from "./pages/Inventory";
 import Dashboard from "./pages/Dashboard";
 import Registration from "./pages/Registration";
 import { Oval } from "react-loader-spinner";
-import { boolean } from "zod";
 import ProtectedRoute from './components/ProtectedRoute'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

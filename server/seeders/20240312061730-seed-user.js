@@ -1,5 +1,5 @@
 'use strict';
-const genSaltAndHash = require('../helpers.js')
+const genSaltAndHash = require('../helper/genSaltAndHash.js')
 
 
 /** @type {import('sequelize-cli').Migration} */

@@ -12,7 +12,7 @@ const authenticate = (req, res, next) => {
   const access_token = req.headers.authorization.split(' ')[1];
   const decoded_data = jwt.decode(access_token)
   const havePermission=role({
-    permissions: decoded_data?.permissions,
+    email: decoded_data?.email,
     method,
     endpoint: path
   })

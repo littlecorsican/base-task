@@ -52,6 +52,5 @@ it("test products auth", async () => {
         .get("/api/inventory?limit=10&offset=0&sortBy=Date DESC&contains=")
         .set('Content-Type', "application/json")
         .set('Authorization', `Bearer ${token}`)
-    console.log("res", res)
     expect(res.status).toBe(200);
 });

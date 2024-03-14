@@ -11,7 +11,6 @@ export default function Admin() {
     const limit = 10
     const [offset, setOffset] = useState(0)
 
-
     const { data:users,
         isError:isUsersError,
         error:usersError,
@@ -26,7 +25,7 @@ export default function Admin() {
     const handleGrant=(id, permission)=>{
         global_context.setLoading(true)
         try {
-            request(`/api/user/grantpermission/${id}`, "POST", {
+            request(`/api/permission/grantpermission/${id}`, "POST", {
                 permission
             }).then((result)=>{
                 global_context.setLoading(false)
@@ -46,7 +45,7 @@ export default function Admin() {
     const removeAdmin=(id, permission)=>{
         global_context.setLoading(true)
         try {
-        request(`/api/user/removepermission/${id}`, "POST", {
+        request(`/api/permission/removepermission/${id}`, "POST", {
             permission
         }).then((result)=>{
             global_context.setLoading(false)

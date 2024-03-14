@@ -8,6 +8,9 @@ const roleBasedAccessMap={
     "admin": {
         "GET" : "view_permission",
         "POST": "alter_permission",
+    },
+    "permission": {
+        "POST": "alter_permission",
     }
 }
 

@@ -44,15 +44,15 @@ export default function Layout({  }) {
             navItem.map((value)=>{
               return <a href={value.url} key={value.url} className="m-auto">
                 <div className="nav_item">
-                  <div className=""><img src={value.img} /></div>
+                  <div className=""><img src={value.icon} /></div>
                   <div className="">{value.title}</div>
                 </div>
               </a>
             })
           }
-          {global_context.user === null &&
-          global_context.user?.permission.includes("view_permission") &&
-          <a href="/login" className="m-auto">
+          {global_context.user !== null &&
+          JSON.parse(global_context.user)?.permissions.find((value) => value?.permission?.name === "view_permission") != undefined &&
+          <a href="/admin" className="m-auto">
             <div className="nav_item">
               <div className=""><img src="" /></div>
               <div className="">Admin</div>

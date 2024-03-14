@@ -12,11 +12,13 @@ const userRoute=require('./routes/user')
 const productRoute=require('./routes/product')
 const dashboardRoute=require('./routes/dashboard')
 const verifyRoute=require('./routes/verify')
+const permissionRoute=require('./routes/permission')
 
 app.use('/api/user', userRoute)
 app.use('/api/inventory', productRoute)
 app.use('/api/dashboard', dashboardRoute)
 app.use('/api/verify', verifyRoute)
+app.use('/api/permission', permissionRoute)
 
 app.get('/', function (req, res) {
    res.send('Hello World');

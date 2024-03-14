@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const role = require('./role')
 
-const authenticate = (req, res, next) => {
+const authenticate = async (req, res, next) => {
 
   if (!req.headers.authorization) {
     return res.status(401).send({ success: 0, message: "no bearer token" });
@@ -12,7 +12,7 @@ const authenticate = (req, res, next) => {
   const method = req.method
   const access_token = req.headers.authorization.split(' ')[1];
   const decoded_data = jwt.decode(access_token)
-  const havePermission=role({
+  const havePermission= await role({
     email: decoded_data?.email,
     method,
     endpoint: path

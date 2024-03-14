@@ -1,11 +1,11 @@
 const roleBasedAccessMap={
-    "/api/inventory": {
+    "inventory": {
         "GET" : "view_product",
         "POST": "create_product",
         "PUT": "update_product",
         "DELETE": "delete_product",
     },
-    "/api/admin": {
+    "admin": {
         "GET" : "view_permission",
         "POST": "alter_permission",
     }

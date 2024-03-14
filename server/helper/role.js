@@ -23,9 +23,10 @@ const role = async({email, method, endpoint}) => {
     )
     if (!user) return false
     
-    return user?.user_permission.find((value)=>{
+    const permission = user?.user_permission.find((value)=>{
         return value?.permission?.name === roleBasedAccessMap[endpoint][method]
     })
+    return permission == {} ? false : true
 };
 
 

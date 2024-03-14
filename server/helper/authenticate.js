@@ -7,7 +7,8 @@ const authenticate = (req, res, next) => {
     return res.status(401).send({ success: 0, message: "no bearer token" });
   }
 
-  const path = req.originalUrl.split("?")[0]
+  let path = req.originalUrl.split("?")[0]
+  if (path.split("/").length > 1) path = path.split("/")[2].trim()
   const method = req.method
   const access_token = req.headers.authorization.split(' ')[1];
   const decoded_data = jwt.decode(access_token)

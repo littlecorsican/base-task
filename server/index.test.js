@@ -17,14 +17,12 @@ it("test index", async () => {
 });
 
 it("test role", async () => {
-    const permissions = ["view_product"]
     const endpoint = '/api/inventory' 
-    const bool = role({
-        permissions,
+    const bool = await role({
+        email: "root@root.com",
         method: "GET",
         endpoint
     })
-
     expect(bool).toBe(true);
 });
 
@@ -50,6 +48,24 @@ it("test products auth", async () => {
     const token=jwtSignature(data)
     const res = await request
         .get("/api/inventory?limit=10&offset=0&sortBy=Date DESC&contains=")
+        .set('Content-Type', "application/json")
+        .set('Authorization', `Bearer ${token}`)
+    expect(res.status).toBe(200);
+});
+
+
+it("test individual product", async () => {
+    let data = { 
+        time: new Date(), 
+        email: "root@root@gmail.com",
+        id: 1,
+        permissions: [
+            "view_product"
+        ]
+    }
+    const token=jwtSignature(data)
+    const res = await request
+        .get("/api/inventory/1")
         .set('Content-Type', "application/json")
         .set('Authorization', `Bearer ${token}`)
     expect(res.status).toBe(200);

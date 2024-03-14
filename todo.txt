@@ -1,10 +1,10 @@
 TODO
 
 - auth with refresh token
-- deploy
 - move to store token in cookie
 
--done 
+
+-- done -- 
 -remove all console log
 - unit test
 - roles
@@ -14,3 +14,4 @@ TODO
 - inventory + filter + sort
 - move user/verify to auth/verify
 - add try catch to all request
+- deploy

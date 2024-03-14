@@ -37,9 +37,9 @@ export default function Layout({  }) {
   return (
     <div className="">
         <nav className="nav_bar">
-          {/* <div className="nav_item">
-            User <img src="" />
-          </div> */}
+          <div className="m-auto text-white">
+            Welcome, {JSON.parse(global_context?.user)?.name}
+          </div>
           {
             navItem.map((value)=>{
               return <a href={value.url} key={value.url} className="m-auto">

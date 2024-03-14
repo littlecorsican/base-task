@@ -107,6 +107,7 @@ router.post('/login', async function (req, res) {
                     message: "",
                     access_token: token,
                     email: user.email,
+                    name: user.name,
                     rank: user.rank
                 })
             }

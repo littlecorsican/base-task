@@ -3,6 +3,8 @@ TODO
 - auth with refresh token
 - inventory + filter + sort
 - deploy
+- roles
+-remove all console log
 
 -done 
 - unit test

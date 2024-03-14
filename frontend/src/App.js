@@ -34,7 +34,6 @@ export default function App() {
 
   useEffect(()=>{
     const user = localStorage.getItem('user_credentials')
-    console.log("user111", user)
     setUser(user)
   },[localStorage.getItem('user_credentials')])
 

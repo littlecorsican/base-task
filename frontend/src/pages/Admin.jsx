@@ -1,12 +1,8 @@
-import { useRef, useEffect, useState, useContext } from "react";
-import {
-    useQuery,
-} from '@tanstack/react-query';
+import { useEffect, useState, useContext } from "react";
 import { GlobalContext } from "../App";
 import { request } from '../utils/helpers'
 import useUser from '../hooks/useUser'
 import '../css/inventory.css';
-import { z } from "zod";
 import { permissions } from '../enums/permissions'
 
 export default function Admin() {

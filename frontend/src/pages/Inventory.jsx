@@ -67,6 +67,8 @@ export default function Inventory() {
                     global_context.toast("Product Updated")
                     refetch()
                 }
+            }).catch((err)=>{
+                global_context.toast(`Error`)
             })
         } else {
             request(`/api/inventory`, "POST", {
@@ -82,6 +84,8 @@ export default function Inventory() {
                     global_context.toast("Product Created")
                     refetch()
                 }
+            }).catch((err)=>{
+                global_context.toast(`Error`)
             })
         }
     }
@@ -101,7 +105,9 @@ export default function Inventory() {
                     global_context.toast("Product Deleted")
                     refetch()
                 }
-            })  
+            }).catch((err)=>{
+                global_context.toast(`Error`)
+            })
         } catch(e) {
             global_context.toast(`Error, ${e?.message}`)
         }

@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState, useContext } from "react";
-import { request, iSOToReadable } from '../utils/helpers'
+import { useContext } from "react";
+import { iSOToReadable } from '../utils/helpers'
 import { GlobalContext } from "../App";
 import '../css/inventory.css';
 import useProduct from '../hooks/useProduct'

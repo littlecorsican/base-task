@@ -9,48 +9,76 @@ export const request = async(url, type = "GET", body= null) => {
     }
 
     if (type === "POST") {
-        const response = await fetch(base + url , {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`
-            },
-            body: JSON.stringify(body)
-            });
-            const response2 = await response.json()
-            return response2
+        try {
+            const response = await fetch(base + url , {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                },
+                body: JSON.stringify(body)
+                });
+                const response2 = await response.json()
+                return response2
+        } catch(e) {
+            return {
+                success: 0,
+                message: e.toString()
+            }
+        }
     } else if (type === "PUT") {
-        const response = await fetch(base + url , {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`
-            },
-            body: JSON.stringify(body)
-            });
-            const response2 = await response.json()
-            return response2
+        try {
+            const response = await fetch(base + url , {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                },
+                body: JSON.stringify(body)
+                });
+                const response2 = await response.json()
+                return response2
+            } catch(e) {
+            return {
+                success: 0,
+                message: e.toString()
+            }
+        }
     } else if (type === "DELETE") {
-        const response = await fetch(base + url , {
-            method: 'DELETE',
+        try {
+            const response = await fetch(base + url , {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                },
+                body: body,
+                });
+                const response2 = await response.json()
+                return response2
+        } catch(e) {
+            return {
+                success: 0,
+                message: e.toString()
+            }
+        }
+    }
+    try {
+        const response = await fetch(base + url, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`
             },
-            body: body,
-            });
-            const response2 = await response.json()
-            return response2
+        });
+        const response2 = await response.json()
+        return response2
+    } catch(e) {
+        return {
+            success: 0,
+            message: e.toString()
+        }
     }
-    const response = await fetch(base + url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${access_token}`
-        },
-    });
-    const response2 = await response.json()
-    return response2
 }
 
 export const addExtraZero =(string)=> {

@@ -63,10 +63,7 @@ export default function App() {
         <QueryClientProvider client={queryClient}>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={
-                <ProtectedRoute redirectPath="/login">
-                  <Home />
-                </ProtectedRoute>}  />
+              <Route index element={<Home/>}  />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Registration />} />
               <Route path="dashboard" element={

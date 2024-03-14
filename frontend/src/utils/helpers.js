@@ -1,4 +1,4 @@
-import { base } from '../constants'
+
 
 export const request = async(url, type = "GET", body= null) => {
 
@@ -10,7 +10,7 @@ export const request = async(url, type = "GET", body= null) => {
 
     if (type === "POST") {
         try {
-            const response = await fetch(base + url , {
+            const response = await fetch(process.env.REACT_APP_BASE + url , {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export const request = async(url, type = "GET", body= null) => {
         }
     } else if (type === "PUT") {
         try {
-            const response = await fetch(base + url , {
+            const response = await fetch(process.env.REACT_APP_BASE + url , {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const request = async(url, type = "GET", body= null) => {
         }
     } else if (type === "DELETE") {
         try {
-            const response = await fetch(base + url , {
+            const response = await fetch(process.env.REACT_APP_BASE + url , {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const request = async(url, type = "GET", body= null) => {
         }
     }
     try {
-        const response = await fetch(base + url, {
+        const response = await fetch(process.env.REACT_APP_BASE + url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

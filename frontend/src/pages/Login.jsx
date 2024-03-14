@@ -2,7 +2,6 @@ import { useRef, useEffect, useState, useContext } from "react";
 // import { useNavigate } from "@tanstack/router";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
-import { base } from '../constants'
 import { GlobalContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
@@ -46,7 +45,7 @@ export default function LoginPage() {
 
   const login=async(email, password)=>{
     global_context.setLoading(true);
-    const response = await fetch(`${base}/api/user/login`, {
+    const response = await fetch(`${process.env.REACT_APP_BASE}/api/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

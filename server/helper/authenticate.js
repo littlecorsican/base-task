@@ -17,9 +17,6 @@ const authenticate = (req, res, next) => {
   }
 };
 
-// app.get('/protected', authenticate, (req, res) => {
-//   res.send('Welcome to the protected route');
-// });
 
 module.exports = authenticate
 
@@ -40,20 +37,3 @@ module.exports = authenticate
 //   })
 
 // })
-
-
-// const authenticate = (req, res, next) => {
-//   if (!req.headers.authorization) {
-//     return res.status(401).send({ success: 0, message: "authentication failed" });
-//   }
-
-//   try {
-//     const access_token = req.headers.authentication.split(' ')[1];
-//     console.log("access_token", req.headers.authentication, access_token)
-//     const decoded = jwt.verify(access_token, process.env.JWTSECRET);
-//     req.user = decoded;
-//     next();
-//   } catch (error) {
-//     return res.status(400).send({ success: 0, message: "authentication failed" });
-//   }
-// };

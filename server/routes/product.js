@@ -5,7 +5,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 // router.use(bodyParser.raw());
 const models = require('../models/index')
-const jwt = require('jsonwebtoken');
+const sortToColumnMap = require('../enums/sortToColumnMap');
 const { Sequelize } = require('sequelize');
 const authenticate = require('../helper/authenticate')
 require('dotenv').config();
@@ -15,17 +15,12 @@ router.use((req, res, next) => {
     authenticate(req, res, next) 
 })
 
-const sortToColumn={
-    "Name": "name",
-    "Price": "price",
-    "Date": "createdAt"
-}
-
 router.get('/', function (req, res) { // Get all with pagination
     const {limit, offset, sortBy} = req.query
     console.log(limit, offset, sortBy)
-    const sortBy_column = sortToColumn[sortBy.split(" ")[0]]
+    const sortBy_column = sortToColumnMap[sortBy.split(" ")[0]]
     const sortBy_order = sortBy.split(" ")[1]
+    console.log("sortBy_column", sortBy_column)
     try {
         models.Product.findAll({
             limit: limit,

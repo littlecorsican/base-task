@@ -2,7 +2,6 @@ TODO
 
 - auth with refresh token
 - deploy
-- roles
 -remove all console log
 - move user/verify to auth/verify
 - move to store token in cookie
@@ -10,6 +9,7 @@ TODO
 
 -done 
 - unit test
+- roles
 - edit Readme
 - admin page
 - jwt sign with user_permission

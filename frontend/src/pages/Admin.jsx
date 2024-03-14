@@ -24,7 +24,6 @@ export default function Admin() {
     } = useUser({limit:limit, offset:offset})
 
     useEffect(()=>{
-        console.log( "offset1", offset)
         refetch({limit:limit, offset:offset})
     },[offset])
 
@@ -34,7 +33,6 @@ export default function Admin() {
             request(`/api/user/grantpermission/${id}`, "POST", {
                 permission
             }).then((result)=>{
-                console.log("result", result)
                 global_context.setLoading(false)
                 if (!result.success) {
                     global_context.toast(`Error, ${result?.message}`)
@@ -55,7 +53,6 @@ export default function Admin() {
         request(`/api/user/removepermission/${id}`, "POST", {
             permission
         }).then((result)=>{
-            console.log("result", result)
             global_context.setLoading(false)
             if (!result.success) {
                 global_context.toast(`Error, ${result?.message}`)
@@ -69,10 +66,6 @@ export default function Admin() {
             global_context.toast("Error")
         }
     }
-
-    useEffect(()=>{
-        console.log("usersError", usersError, users)
-    },[usersError])
 
     return (
         <div className="flex items-center justify-center min-h-screen">

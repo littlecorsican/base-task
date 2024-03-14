@@ -17,7 +17,6 @@ router.use((req, res, next) => {
 
 router.get('/', function (req, res) { // Get all with pagination
     const {limit, offset, sortBy, contains} = req.query
-    console.log(limit, offset, sortBy, contains)
     const sortBy_column = sortToColumnMap[sortBy.split(" ")[0]]
     const sortBy_order = sortBy.split(" ")[1]
 
@@ -49,7 +48,6 @@ router.get('/', function (req, res) { // Get all with pagination
 
 router.get('/search', function (req, res) { // Get all with search
     const {limit, offset, search} = req.query
-    console.log(limit, offset, search)
     try {
         models.Product.findAll({
             limit: limit,

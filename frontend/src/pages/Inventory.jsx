@@ -38,7 +38,6 @@ export default function Inventory() {
 
     const createProduct=(e)=>{
         e.preventDefault()
-        console.log(e)
         global_context.setLoading(true)
         const schema = z.object({
             name: z.string(),
@@ -50,7 +49,6 @@ export default function Inventory() {
             description: descriptionRef.current.value,
             price: priceRef.current.value,
         })
-        console.log(result)
 
         if (!result.success) {
             const errorMsg = result.error.issues.map(item=>`${item.path[0]} - ${item.message} . \n`).join("")
@@ -64,7 +62,6 @@ export default function Inventory() {
                 description: descriptionRef.current.value,
                 price: priceRef.current.value,
             }).then((result)=>{
-                console.log("result111111111", result)
                 global_context.setLoading(false)
                 closeCreateNewModal()
                 if (!result.success) {
@@ -80,7 +77,6 @@ export default function Inventory() {
                 description: descriptionRef.current.value,
                 price: priceRef.current.value,
             }).then((result)=>{
-                console.log("result222222", result)
                 global_context.setLoading(false)
                 closeCreateNewModal()
                 if (!result.success) {
@@ -101,7 +97,6 @@ export default function Inventory() {
         try {
             request(`/api/inventory/${id}`, "DELETE")
             .then((result)=>{
-                console.log("result222222", result)
                 global_context.setLoading(false)
                 if (!result.success) {
                     global_context.toast(`Error, ${result?.message}`)

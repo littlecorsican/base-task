@@ -16,7 +16,3 @@ test('test addExtraZero function', () => {
 test('test iSOToReadable function', () => {
   expect(iSOToReadable("2024-03-13T11:00:46.724Z")).toBe("13-03-2024")
 });
-
-// test('test request function'), ()=>{
-//   expect(request("/api/inventory")).to
-// }

@@ -3,6 +3,8 @@ const app = require("./index");
 const supertest = require("supertest");
 const request = supertest(app);
 const jwtSignature = require('./helper/jwtSignature')
+const role = require('./helper/role')
+
 
 test('test salt generation', () => {
     expect(typeof genSaltAndHash("password")).toBe("string")
@@ -12,6 +14,18 @@ it("test index", async () => {
     const res = await request.get("/");
     expect(res.status).toBe(200);
     expect(res.text).toBe("Hello World");
+});
+
+it("test role", async () => {
+    const permissions = ["view_product"]
+    const endpoint = '/api/inventory' 
+    const bool = role({
+        permissions,
+        method: "GET",
+        endpoint
+    })
+
+    expect(bool).toBe(true);
 });
 
 it("test products unauth", async () => {

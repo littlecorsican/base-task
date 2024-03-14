@@ -8,6 +8,7 @@ import useModal from '../hooks/useModal'
 import useProducts from '../hooks/useInventory'
 import { z } from "zod";
 import { request, iSOToReadable } from '../utils/helpers'
+import { filter_options } from '../constants'
 
 export default function Inventory() {
 
@@ -19,7 +20,7 @@ export default function Inventory() {
     const limit = 10
     const [offset, setOffset] = useState(0)
     const [contains, setContains] = useState("")
-    const [sortBy, setSortBy] = useState("Date DESC")
+    const [sortBy, setSortBy] = useState(filter_options[2])
     const [ModalCreate, setModalCreate] = useState(false)  // whether the modal is for create or update
     const [currentSelected, setCurrentSelected] = useState({})
     const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading, refetch } = useProducts({
@@ -28,15 +29,6 @@ export default function Inventory() {
         sortBy: sortBy,
         contains: contains
     })
-
-    const options = [
-        "Name ASC",
-        "Name DESC",
-        "Price ASC",
-        "Price DESC",
-        "Date ASC",
-        "Date DESC",
-    ]
 
     const { openModal:openCreateNewModal, Modal:CreateNewModal, closeModal:closeCreateNewModal } = useModal();
 
@@ -159,7 +151,7 @@ export default function Inventory() {
                 <div className="leading-10">
                     Sort by: <select defaultValue="Date DESC" onChange={handleChangeSelect}>
                         {
-                            options.map((value)=>{
+                            filter_options.map((value)=>{
                                 return<option value={value}>
                                     {value}
                                 </option>

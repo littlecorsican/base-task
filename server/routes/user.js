@@ -63,7 +63,13 @@ router.post('/login', async function (req, res) {
         include: [
             {
                 model: models.User_Permission, 
-                as: 'user_permission'
+                as: 'user_permission',
+                include: [
+                    {
+                        model: models.Permission,
+                        as: 'permission',
+                    }
+                ]
             }
         ]
     }).then((user)=>{

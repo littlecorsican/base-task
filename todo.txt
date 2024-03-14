@@ -6,6 +6,7 @@ TODO
 -remove all console log
 - move user/verify to auth/verify
 - move to store token in cookie
+- add try catch to all request
 
 -done 
 - unit test

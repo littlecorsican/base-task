@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 const cors = require('cors');
+const auth = require('./helper/authenticate');
 
 app.use(cors({
    origin: '*'

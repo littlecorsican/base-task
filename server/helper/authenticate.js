@@ -1,18 +1,18 @@
 const jwt = require('jsonwebtoken');
-const secretKey = 'secret_key';
 
 const authenticate = (req, res, next) => {
-  const token = req.headers['authorization'];
-  if (!token) {
-    return res.status(401).send('Access Denied. No token provided.');
+  if (!req.headers.authorization) {
+    return res.status(401).send({ success: 0, message: "authentication failed" });
   }
 
   try {
-    const decoded = jwt.verify(token, secretKey);
+    const access_token = req.headers.authentication.split(' ')[1];
+    console.log("access_token", req.headers.authentication, access_token)
+    const decoded = jwt.verify(access_token, process.env.JWTSECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(400).send('Invalid Token.');
+    return res.status(400).send({ success: 0, message: "authentication failed" });
   }
 };
 
@@ -22,20 +22,37 @@ const authenticate = (req, res, next) => {
 
 module.exports = authenticate
 
-router.use((req, res, next) => {
-  //console.log("req", req)
-  if (!req.headers.authentication) {
-      return res.status(401).send({ success: 0, message: "authentication failed" });
-  }
-  const access_token = req.headers.authentication.split(' ')[1];
-  console.log("access_token", access_token, process.env.JWTSECRET)
-  jwt.verify(access_token, process.env.JWTSECRET, (err, user) => {
+// router.use((req, res, next) => {
+//   //console.log("req", req)
+//   if (!req.headers.authorization) {
+//       return res.status(401).send({ success: 0, message: "authentication failed" });
+//   }
+//   const access_token = req.headers.authentication.split(' ')[1];
+//   console.log("access_token", access_token, process.env.JWTSECRET)
+//   jwt.verify(access_token, process.env.JWTSECRET, (err, user) => {
      
-     console.log("err", err)
-     if (err) return res.status(401).send({ success: 0, message: "authentication failed" });
-     console.log("user", user)
+//      console.log("err", err)
+//      if (err) return res.status(401).send({ success: 0, message: "authentication failed" });
+//      console.log("user", user)
  
-     next()
-  })
+//      next()
+//   })
 
-})
+// })
+
+
+// const authenticate = (req, res, next) => {
+//   if (!req.headers.authorization) {
+//     return res.status(401).send({ success: 0, message: "authentication failed" });
+//   }
+
+//   try {
+//     const access_token = req.headers.authentication.split(' ')[1];
+//     console.log("access_token", req.headers.authentication, access_token)
+//     const decoded = jwt.verify(access_token, process.env.JWTSECRET);
+//     req.user = decoded;
+//     next();
+//   } catch (error) {
+//     return res.status(400).send({ success: 0, message: "authentication failed" });
+//   }
+// };

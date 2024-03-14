@@ -15,7 +15,7 @@ export const request = async(url, type = "GET", body= null) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authentication': `Bearer ${access_token}`
+                'Authorization': `Bearer ${access_token}`
             },
             body: JSON.stringify(body)
             });
@@ -28,7 +28,7 @@ export const request = async(url, type = "GET", body= null) => {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authentication': `Bearer ${access_token}`
+                'Authorization': `Bearer ${access_token}`
             },
             body: JSON.stringify(body)
             });
@@ -41,7 +41,7 @@ export const request = async(url, type = "GET", body= null) => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authentication': `Bearer ${access_token}`
+                'Authorization': `Bearer ${access_token}`
             },
             body: body,
             });
@@ -54,7 +54,7 @@ export const request = async(url, type = "GET", body= null) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authentication': `Bearer ${access_token}`
+            'Authorization': `Bearer ${access_token}`
         },
     });
     console.log('response', response)

@@ -54,16 +54,13 @@ export default function LoginPage() {
       body: JSON.stringify({ email: email, password: password }),
     });
     global_context.setLoading(false);
-    console.log('response', response)
     const response2 = await response.json()
-    console.log('response2', response2)
     if (!response.ok) {
       global_context.toast("Password wrong")
     } else {
 
       // LOGIN SUCCESS
       // ADD ACCESS TOKEN TO LOCAL STORAGE
-      console.log("response2.toString()", JSON.stringify(response2))
       localStorage.setItem("user_credentials",JSON.stringify(response2))
       global_context.setUser(JSON.stringify(response2))
       global_context.toast("Login success")

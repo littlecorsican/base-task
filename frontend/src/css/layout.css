@@ -5,6 +5,8 @@
     text-align: center;
     display: flex;
     justify-content: space-evenly;
+    flex-direction: row;
+    align-items: center;
 }
 .nav_item:hover {
     border: 1px solid #fff;
@@ -22,4 +24,9 @@
     .nav_bar {
         flex-direction: column;
     }
+}
+
+.icon {
+    width: 45px;
+    height: 45px;
 }

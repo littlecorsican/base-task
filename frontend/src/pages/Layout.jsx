@@ -13,17 +13,17 @@ export default function Layout({  }) {
     {
       title: "Home",
       url: "/",
-      icon: "",
+      icon: "/images/home.png",
     },
     {
       title: "Dashboard",
       url: "/dashboard",
-      icon: "",
+      icon: "/images/dashboard.png",
     },
     {
         title: "Inventory",
         url: "/inventory",
-        icon: "",
+        icon: "/images/inventory.jpg",
     },
   ]
 
@@ -44,7 +44,7 @@ export default function Layout({  }) {
             navItem.map((value)=>{
               return <a href={value.url} key={value.url} className="m-auto">
                 <div className="nav_item">
-                  <div className=""><img src={value.icon} /></div>
+                  <div className=""><img src={value.icon} className="icon" /></div>
                   <div className="">{value.title}</div>
                 </div>
               </a>

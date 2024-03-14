@@ -33,3 +33,6 @@ npx sequelize-cli db:seed:all
 
 ### Undo seed
 npx sequelize-cli db:seed:undo
+
+### Seed a particular file
+npx sequelize-cli db:seed --seed my-seeder-file.js

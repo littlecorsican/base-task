@@ -4,7 +4,7 @@ const supertest = require("supertest");
 const request = supertest(app);
 const jwtSignature = require('./helper/jwtSignature')
 const role = require('./helper/role')
-
+const create1000Products = require('./helper/create1000Products')
 
 test('test salt generation', () => {
     expect(typeof genSaltAndHash("password")).toBe("string")
@@ -69,4 +69,10 @@ it("test individual product", async () => {
         .set('Content-Type', "application/json")
         .set('Authorization', `Bearer ${token}`)
     expect(res.status).toBe(200);
+});
+
+
+it("test seed 1000 products", async () => {
+    const products = create1000Products()
+    expect(products.length).toBe(1000);
 });

@@ -17,9 +17,7 @@ export const request = async(url, type = "GET", body= null) => {
             },
             body: JSON.stringify(body)
             });
-            console.log('response', response)
             const response2 = await response.json()
-            console.log('response2', response2)
             return response2
     } else if (type === "PUT") {
         const response = await fetch(base + url , {
@@ -30,9 +28,7 @@ export const request = async(url, type = "GET", body= null) => {
             },
             body: JSON.stringify(body)
             });
-            console.log('response', response)
             const response2 = await response.json()
-            console.log('response2', response2)
             return response2
     } else if (type === "DELETE") {
         const response = await fetch(base + url , {
@@ -43,9 +39,7 @@ export const request = async(url, type = "GET", body= null) => {
             },
             body: body,
             });
-            console.log('response', response)
             const response2 = await response.json()
-            console.log('response2', response2)
             return response2
     }
     const response = await fetch(base + url, {
@@ -55,9 +49,7 @@ export const request = async(url, type = "GET", body= null) => {
             'Authorization': `Bearer ${access_token}`
         },
     });
-    console.log('response', response)
     const response2 = await response.json()
-    console.log('response2', response2)
     return response2
 }
 

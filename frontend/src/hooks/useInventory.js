@@ -3,11 +3,11 @@ import {
 } from '@tanstack/react-query';
 import { request } from '../utils/helpers'
 
-const useProducts = ({limit, offset}) => {
+const useProducts = ({limit, offset, sortBy}) => {
     return useQuery({ 
         queryKey: ['inventory'],
         queryFn: async() => {
-            const res = await request(`/api/inventory?offset=${offset}&limit=${limit}`, "GET", )
+            const res = await request(`/api/inventory?offset=${offset}&limit=${limit}&sortBy=${sortBy}`, "GET", )
             return res?.data
         }
     });

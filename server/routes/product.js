@@ -15,14 +15,24 @@ router.use((req, res, next) => {
     authenticate(req, res, next) 
 })
 
+const sortToColumn={
+    "Name": "name",
+    "Price": "price",
+    "Date": "createdAt"
+}
 
 router.get('/', function (req, res) { // Get all with pagination
-    const {limit, offset} = req.query
-    console.log(limit, offset)
+    const {limit, offset, sortBy} = req.query
+    console.log(limit, offset, sortBy)
+    const sortBy_column = sortToColumn[sortBy.split(" ")[0]]
+    const sortBy_order = sortBy.split(" ")[1]
     try {
         models.Product.findAll({
             limit: limit,
-            offset: offset
+            offset: offset,
+            order: [
+                [sortBy_column, sortBy_order],
+            ],
         }).then((response)=>res.send({  
             success: 1,
             data: response,

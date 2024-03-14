@@ -14,28 +14,33 @@ export default function Inventory() {
     const nameRef = useRef()
     const descriptionRef = useRef()
     const priceRef = useRef()
-    const filterRef = useRef()
+    const findRef = useRef()
     const global_context = useContext(GlobalContext)
     const limit = 10
     const [offset, setOffset] = useState(0)
+    const [sortBy, setSortBy] = useState("Date DESC")
     const [ModalCreate, setModalCreate] = useState(false)  // whether the modal is for create or update
     const [currentSelected, setCurrentSelected] = useState({})
     const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading, refetch } = useProducts({
         limit:limit,
         offset:offset,
+        sortBy: sortBy
     })
 
     const options = [
-        "Name",
-        "Price",
-        "Date"
+        "Name ASC",
+        "Name DESC",
+        "Price ASC",
+        "Price DESC",
+        "Date ASC",
+        "Date DESC",
     ]
 
     const { openModal:openCreateNewModal, Modal:CreateNewModal, closeModal:closeCreateNewModal } = useModal();
 
     useEffect(()=>{
-        refetch({limit:limit, offset:offset})
-    },[offset])
+        refetch({limit:limit, offset:offset, sortBy: sortBy})
+    },[offset, sortBy])
 
     const createProduct=(e)=>{
         e.preventDefault()
@@ -117,6 +122,10 @@ export default function Inventory() {
 
     }
 
+    const handleChangeSelect=(e)=>{
+        setSortBy(e.target.value)
+    }
+
   return (
     <>
       <div className="flex flex-row justify-between px-4 py-2">
@@ -139,10 +148,10 @@ export default function Inventory() {
         <div>
             <div className="my-2 py-1 flex flex-row">
                 <div className="">
-                    Filter: <input type="text" ref={filterRef} />
+                    Find: <input type="text" ref={findRef} />
                 </div>
                 <div className="">
-                    Sort by: <select>
+                    Sort by: <select defaultValue="Date DESC" onChange={handleChangeSelect}>
                         {
                             options.map((value)=>{
                                 return<option value={value}>

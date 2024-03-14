@@ -105,11 +105,10 @@ router.post('/login', async function (req, res) {
                 console.log("token", token)
                 res.status(200).send({
                     success: 1,
-                    message: "",
                     access_token: token,
                     email: user.email,
                     name: user.name,
-                    rank: user.rank
+                    permissions: user.user_permission
                 })
             }
             

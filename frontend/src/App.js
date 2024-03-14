@@ -10,6 +10,7 @@ import NoPage from "./pages/NoPage";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Inventory from "./pages/Inventory";
+import NotAllowed from "./pages/NotAllowed";
 import Dashboard from "./pages/Dashboard";
 import Registration from "./pages/Registration";
 import { Oval } from "react-loader-spinner";
@@ -87,6 +88,7 @@ export default function App() {
                   <Admin />
                 </ProtectedRoute>} 
               />
+              <Route path="notAllowed" element={<NotAllowed />} />
               <Route path="*" element={<NoPage />} />
             </Route>
           </Routes>

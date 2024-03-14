@@ -15,6 +15,7 @@ const ProtectedRoute = ({
     // check if user have the permission
     const location = useLocation()
     const pathname = location.pathname
+    console.log("pathname", pathname)
     if (pathPermissions.hasOwnProperty(pathname)) { // check only if pathPermissions has the pathname
       const allowed = credentials?.permissions.find((value)=>{
         return value?.permission?.name === pathPermissions[pathname]

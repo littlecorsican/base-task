@@ -1,7 +1,4 @@
 import { useRef, useEffect, useState, useContext } from "react";
-import {
-    useQuery,
-} from '@tanstack/react-query';
 import { GlobalContext } from "../App";
 import '../css/inventory.css';
 import useModal from '../hooks/useModal'
@@ -159,7 +156,7 @@ export default function Inventory() {
                 <thead>
                     <tr>
                         <th className="small-td">ID</th>
-                        <th>Product Name</th>
+                        <th>Product Name (Click to open new window)</th>
                         <th>Product Description</th>
                         <th>Price</th>
                         <th>Date</th>
@@ -174,7 +171,7 @@ export default function Inventory() {
                                 <td className="small-td">
                                     {value?.id}
                                 </td>
-                                <td>
+                                <td className="cursor-pointer" onClick={()=>document.location.href=`/product/${value?.id}`}>
                                     {value?.name}
                                 </td>
                                 <td>

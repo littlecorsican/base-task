@@ -21,7 +21,6 @@ const role = async({email, method, endpoint}) => {
             ]
         }
     )
-    console.log("user", user)
     if (!user) return false
     
     return user?.user_permission.find((value)=>{

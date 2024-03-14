@@ -16,10 +16,10 @@ export default function Layout({  }) {
       icon: "",
     },
     {
-        title: "Dashboard",
-        url: "/dashboard",
-        icon: "",
-      },
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: "",
+    },
     {
         title: "Inventory",
         url: "/inventory",

@@ -8,6 +8,7 @@ import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import NoPage from "./pages/NoPage";
 import Login from "./pages/Login";
+import Product from "./pages/Product";
 import Admin from "./pages/Admin";
 import Inventory from "./pages/Inventory";
 import NotAllowed from "./pages/NotAllowed";
@@ -78,9 +79,9 @@ export default function App() {
                   <Inventory />
                 </ProtectedRoute>} 
               />
-              <Route path="inventory/:id" element={
+              <Route path="product/:id" element={
                 <ProtectedRoute redirectPath="/login">
-                  <Inventory />
+                  <Product />
                 </ProtectedRoute>} 
               />
               <Route path="admin" element={

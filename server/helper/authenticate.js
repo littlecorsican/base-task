@@ -2,16 +2,17 @@ const jwt = require('jsonwebtoken');
 
 const authenticate = (req, res, next) => {
   if (!req.headers.authorization) {
-    return res.status(401).send({ success: 0, message: "authentication failed" });
+    return res.status(401).send({ success: 0, message: "no bearer token" });
   }
 
   try {
-    const access_token = req.headers.authentication.split(' ')[1];
-    console.log("access_token", req.headers.authentication, access_token)
+    const access_token = req.headers.authorization.split(' ')[1];
+    console.log("access_token", req.headers.authorization, access_token)
     const decoded = jwt.verify(access_token, process.env.JWTSECRET);
     req.user = decoded;
     next();
   } catch (error) {
+    console.log("error", error)
     return res.status(400).send({ success: 0, message: "authentication failed" });
   }
 };

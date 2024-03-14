@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 const cors = require('cors');
-const auth = require('./helper/authenticate');
 
 app.use(cors({
    origin: '*'
@@ -16,12 +15,6 @@ const dashboardRoute=require('./routes/dashboard')
 app.use('/api/user', userRoute)
 app.use('/api/inventory', productRoute)
 app.use('/api/dashboard', dashboardRoute)
-
-// router.use(() => {}); // General middleware
-// router.get('/route1', () => {})
-// router.get('/route2', () => {})
-// router.post('/route2', () => {})
-
 
 app.get('/', function (req, res) {
    res.send('Hello World');

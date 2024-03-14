@@ -7,25 +7,12 @@ router.use(bodyParser.json());
 const models = require('../models/index')
 const jwt = require('jsonwebtoken');
 const { Sequelize } = require('sequelize');
+const authenticate = require('../helper/authenticate')
 require('dotenv').config();
 const Op = Sequelize.Op; 
 
 router.use((req, res, next) => {
-    //console.log("req", req)
-    if (!req.headers.authorization) {
-        return res.status(401).send({ success: 0, message: "authentication failed" });
-    }
-    const access_token = req.headers.authorization.split(' ')[1];
-    console.log("access_token", access_token, process.env.JWTSECRET)
-    jwt.verify(access_token, process.env.JWTSECRET, (err, user) => {
-       
-       console.log("err", err)
-       if (err) return res.status(401).send({ success: 0, message: "authentication failed" });
-       console.log("user", user)
-   
-       next()
-    })
- 
+    authenticate(req, res, next) 
 })
 
 

@@ -9,6 +9,12 @@ const ProtectedRoute = ({
     children,
   }) => {
 
+    // check if user have the permission
+    const location = useLocation()
+    console.log(location.pathname)
+    console.log(location.state)
+    console.log(location.search)
+
     // retrieve access token in localStorage and use it to verify if legit
     const global_context = useContext(GlobalContext)
     const credentials = localStorage.getItem('user_credentials')

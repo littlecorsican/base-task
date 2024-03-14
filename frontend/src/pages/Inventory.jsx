@@ -152,7 +152,7 @@ export default function Inventory() {
                     Sort by: <select defaultValue="Date DESC" onChange={handleChangeSelect}>
                         {
                             filter_options.map((value)=>{
-                                return<option value={value}>
+                                return<option value={value} key={value}>
                                     {value}
                                 </option>
                             }) 

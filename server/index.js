@@ -11,10 +11,12 @@ const router = express.Router()
 const userRoute=require('./routes/user')
 const productRoute=require('./routes/product')
 const dashboardRoute=require('./routes/dashboard')
+const verifyRoute=require('./routes/verify')
 
 app.use('/api/user', userRoute)
 app.use('/api/inventory', productRoute)
 app.use('/api/dashboard', dashboardRoute)
+app.use('/api/verify', verifyRoute)
 
 app.get('/', function (req, res) {
    res.send('Hello World');

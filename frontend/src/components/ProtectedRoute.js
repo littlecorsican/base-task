@@ -28,7 +28,7 @@ const ProtectedRoute = ({
 
     // retrieve access token in localStorage and use it to verify if legit
     if (credentials) {
-      request(`/api/user/verify`, "POST", { access_token: credentials?.access_token })
+      request(`/api/verify`, "POST", { access_token: credentials?.access_token })
         .then((result)=>{
           if (!result.success) {
             global_context.setUser(null)

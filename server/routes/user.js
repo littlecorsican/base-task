@@ -166,18 +166,6 @@ router.post('/register', async function (req, res) {
 
 })
 
-router.post('/verify', async function (req, res) {
-    const access_token = req.body.access_token
-
-    jwt.verify(access_token, process.env.JWTSECRET, (err, user) => {
-        console.log("err", err)
-    
-        if (err) return res.status(403).send({ success: 0, message: "authentication failed" });
-    
-        return res.status(200).send({ success: 1, message: "authentication success" });
-    })
-})
-
 router.post('/grantpermission/:id', async function (req, res) {
     const id = req.params.id
     const permission = req.body.permission

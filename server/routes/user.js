@@ -6,6 +6,7 @@ router.use(bodyParser.json());
 const models = require('../models/index')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const jwtSignature = require('../helper/jwtSignature')
 const { Sequelize } = require('sequelize');
 require('dotenv').config()
 
@@ -94,13 +95,7 @@ router.post('/login', async function (req, res) {
                     ]
                 }
                 console.log("data", data)
-                const token = jwt.sign(
-                    data,
-                    process.env.JWTSECRET,
-                    { 
-                        expiresIn: process.env.TOKEN_EXPIRY
-                    }
-                );
+                const token = jwtSignature(data)
                 console.log("token", token)
                 res.status(200).send({
                     success: 1,

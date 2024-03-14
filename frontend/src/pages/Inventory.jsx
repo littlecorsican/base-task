@@ -25,6 +25,12 @@ export default function Inventory() {
         offset:offset,
     })
 
+    const options = [
+        "Name",
+        "Price",
+        "Date"
+    ]
+
     const { openModal:openCreateNewModal, Modal:CreateNewModal, closeModal:closeCreateNewModal } = useModal();
 
     useEffect(()=>{
@@ -131,8 +137,21 @@ export default function Inventory() {
             isInventoryError && <div>{inventoryError?.message}</div>
         }
         <div>
-            <div className="my-2 py-1">
-                Filter: <input type="text" ref={filterRef} />
+            <div className="my-2 py-1 flex flex-row">
+                <div className="">
+                    Filter: <input type="text" ref={filterRef} />
+                </div>
+                <div className="">
+                    Sort by: <select>
+                        {
+                            options.map((value)=>{
+                                return<option value={value}>
+                                    {value}
+                                </option>
+                            }) 
+                        }
+                    </select>
+                </div>
             </div>
             <table border="1" className="bordered-table">
                 <thead>

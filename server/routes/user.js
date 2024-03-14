@@ -3,7 +3,6 @@ const router=express.Router()
 const bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
-// router.use(bodyParser.raw());
 const models = require('../models/index')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -13,7 +12,6 @@ require('dotenv').config()
 
 router.get('/:id', function (req, res) {
     const id = req.params
-    console.log("id",id)
     models.User.findOne({ where: { id } }).then((response)=>res.send(response))
 })
 

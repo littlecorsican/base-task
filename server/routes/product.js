@@ -73,8 +73,6 @@ router.get('/search', function (req, res) { // Get all with search
 
 router.get('/:id', function (req, res) { // Get one by id
     const id = req.params.id
-    console.log("id",id)
-    // models.Product.findOne({ where: { id } }).then((response)=>console.log(response))
     try {
         models.Product.findOne({ where: { id } })
         .then((response)=>res.send({  
@@ -91,8 +89,6 @@ router.get('/:id', function (req, res) { // Get one by id
 
 router.put('/:id', async function (req, res) { // Update one by id
     const id = req.params.id
-    console.log(req.body)
-    console.log({ ...req.body })
     try {
         models.Product.update({ ...req.body }, {
             where: {
@@ -137,7 +133,6 @@ router.post('/', async function (req, res) { // Create new one
 
     try {
         const result = await models.Product.create({ ...req.body })
-        console.log("result", result)
         res.send({  
             success: 1,
             message: "Product created"

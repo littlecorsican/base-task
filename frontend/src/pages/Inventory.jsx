@@ -18,13 +18,15 @@ export default function Inventory() {
     const global_context = useContext(GlobalContext)
     const limit = 10
     const [offset, setOffset] = useState(0)
+    const [contains, setContains] = useState("")
     const [sortBy, setSortBy] = useState("Date DESC")
     const [ModalCreate, setModalCreate] = useState(false)  // whether the modal is for create or update
     const [currentSelected, setCurrentSelected] = useState({})
     const { data:inventory, isError:isInventoryError, error:inventoryError, isLoading:isInventoryLoading, refetch } = useProducts({
         limit:limit,
         offset:offset,
-        sortBy: sortBy
+        sortBy: sortBy,
+        contains: contains
     })
 
     const options = [
@@ -39,8 +41,8 @@ export default function Inventory() {
     const { openModal:openCreateNewModal, Modal:CreateNewModal, closeModal:closeCreateNewModal } = useModal();
 
     useEffect(()=>{
-        refetch({limit:limit, offset:offset, sortBy: sortBy})
-    },[offset, sortBy])
+        refetch({limit:limit, offset:offset, sortBy: sortBy, contains:contains})
+    },[offset, sortBy, contains])
 
     const createProduct=(e)=>{
         e.preventDefault()
@@ -126,6 +128,10 @@ export default function Inventory() {
         setSortBy(e.target.value)
     }
 
+    const handleFilterChange=(e)=>{
+        setContains(e.target.value)
+    }
+
   return (
     <>
       <div className="flex flex-row justify-between px-4 py-2">
@@ -148,9 +154,9 @@ export default function Inventory() {
         <div>
             <div className="my-2 py-1 flex flex-row">
                 <div className="">
-                    Find: <input type="text" ref={findRef} />
+                    Filter: <input type="text" onChange={handleFilterChange} />
                 </div>
-                <div className="">
+                <div className="leading-10">
                     Sort by: <select defaultValue="Date DESC" onChange={handleChangeSelect}>
                         {
                             options.map((value)=>{

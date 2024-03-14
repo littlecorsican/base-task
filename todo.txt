@@ -1,13 +1,15 @@
 TODO
 
 - auth with refresh token
-- inventory + filter + sort
 - deploy
 - roles
 -remove all console log
+- move user/verify to auth/verify
+- move to store token in cookie
 
 -done 
 - unit test
 - edit Readme
 - admin page
 - jwt sign with user_permission
+- inventory + filter + sort

@@ -16,15 +16,20 @@ router.use((req, res, next) => {
 })
 
 router.get('/', function (req, res) { // Get all with pagination
-    const {limit, offset, sortBy} = req.query
-    console.log(limit, offset, sortBy)
+    const {limit, offset, sortBy, contains} = req.query
+    console.log(limit, offset, sortBy, contains)
     const sortBy_column = sortToColumnMap[sortBy.split(" ")[0]]
     const sortBy_order = sortBy.split(" ")[1]
-    console.log("sortBy_column", sortBy_column)
+
     try {
         models.Product.findAll({
             limit: limit,
             offset: offset,
+            where: {
+                name: {
+                    [Op.like]: `%${contains}%`
+                }
+            },
             order: [
                 [sortBy_column, sortBy_order],
             ],

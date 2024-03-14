@@ -6,7 +6,6 @@ import { GlobalContext } from "../App";
 import { request } from '../utils/helpers'
 import useUser from '../hooks/useUser'
 import '../css/inventory.css';
-import useModal from '../hooks/useModal'
 import { z } from "zod";
 import { permissions } from '../enums/permissions'
 

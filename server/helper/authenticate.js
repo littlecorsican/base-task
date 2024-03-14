@@ -1,6 +1,11 @@
 const jwt = require('jsonwebtoken');
 
 const authenticate = (req, res, next) => {
+
+  const path =req.originalUrl.split("?")[0]
+  const method = req.method
+  console.log("method", method, path)
+
   if (!req.headers.authorization) {
     return res.status(401).send({ success: 0, message: "no bearer token" });
   }

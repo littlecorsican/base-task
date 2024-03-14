@@ -98,7 +98,7 @@ router.post('/login', async function (req, res) {
                     data,
                     process.env.JWTSECRET,
                     { 
-                        expiresIn: '15m'
+                        expiresIn: process.env.TOKEN_EXPIRY
                     }
                 );
                 console.log("token", token)

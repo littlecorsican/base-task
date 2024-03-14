@@ -23,7 +23,6 @@ const ProtectedRoute = ({
         document.location.href = "/notAllowed"
         return
       }
-      
     }
 
     // retrieve access token in localStorage and use it to verify if legit

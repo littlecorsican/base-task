@@ -141,7 +141,7 @@ export default function Inventory() {
         <div>
             <div className="my-2 py-1 flex flex-row">
                 <div className="">
-                    Filter: <input type="text" onChange={handleFilterChange} />
+                    Filter Name: <input type="text" onChange={handleFilterChange} />
                 </div>
                 <div className="leading-10">
                     Sort by: <select defaultValue="Date DESC" onChange={handleChangeSelect}>

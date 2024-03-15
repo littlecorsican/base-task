@@ -16,7 +16,7 @@ const create1000Products=()=>{
         "i got a 50% discount for this"
     ]
     const prices = [
-        8, 7,4,3,5,6,1,2,9,10
+        8,7,4,3,5,6,1,2,9,10
     ]
     products.forEach((item, index, arr)=> {
         const random_name = Math.round(Math.random()*10)

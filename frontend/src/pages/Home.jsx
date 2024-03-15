@@ -4,7 +4,10 @@ import '../css/home.css';
 export default function Home() {
 
   return (
-    <div className="background-space text-center pt-[30vh] min-h-screen text-white">
+    <div className="text-center pt-[30vh] min-h-screen text-white"
+      style={{ backgroundImage:
+        "url('/images/background.gif')", }}
+    >
         <h2>Inventory Management System</h2>
 
         <div className="mt-[10vh] flex flex-row justify-evenly">

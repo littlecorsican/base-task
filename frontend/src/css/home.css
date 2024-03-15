@@ -8,7 +8,3 @@
 .btn:hover {
     transform: scale(1.2,1.2);
 }
-
-.background-space {
-    background: url("http://localhost:3000/images/background.gif") repeat;
-}
